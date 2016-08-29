@@ -293,7 +293,7 @@ Section "Uninstall"
   Delete /REBOOTOK "$INSTDIR\${UI_ICON}"
   
   ; Remove the install directory if it is empty.
-	RMDir /REBOOTOK ${MAIN_INSTDIR}
+	RMDir /REBOOTOK $INSTDIR
   
   ; All done!
   ${UnPrint} "Uninstall Complete"
