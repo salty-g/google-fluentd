@@ -6,7 +6,7 @@
 ; INCLUDES
 ;--------------------------------
 
-!include "MUI2.nsh" 
+!include "MUI2.nsh"
 
 
 ;--------------------------------
@@ -14,10 +14,9 @@
 ;--------------------------------
 
 ;--------------------------------
-; Handles automatic saving of the users selected language 
-; during install.
+; Handles automatic saving of the user's selected language during install.
 ; NOTE: registers the value "Installer Language" for the given
-; regKey under the user register.
+; regKey under the user registry.
 ;--------------------------------
 !macro STACKDRIVER_SAVE_USER_LANGUAGE regKey
   !define MUI_LANGDLL_REGISTRY_ROOT "HKCU"

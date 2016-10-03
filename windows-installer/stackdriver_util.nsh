@@ -1,5 +1,5 @@
 ;--------------------------------
-; Utility functions and macros for Stackdriver installers
+; Utility functions and macros for Stackdriver installers.
 ;--------------------------------
 
 
@@ -7,13 +7,13 @@
 ; GLOBAL VARIABLES
 ;--------------------------------
 
-; Uniinstaller registry key, used to register the software uninstaller.
+; Uninstaller registry key, used to register the software uninstaller.
 !define UNINST_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall"
 
 ;--------------------------------
 ; Defines Print and UnPrint (uninstaller functions)
 ;
-; Print outputs a string messages to the details for an 
+; Print outputs a string messages to the details for an
 ; installer/uninstaller.  It prints to both (list and text view).
 ; After printing it returns to the last used DetailsPrint setting.
 ;
@@ -23,20 +23,19 @@
 ;--------------------------------
 
 ; Generate two print details functions, one for installer sections
-; and one for uninstaller sections
-!macro _STACKDRIVER_PRINT_DETAILS_FUNC_MACRO un 
+; and one for uninstaller sections.
+!macro _STACKDRIVER_PRINT_DETAILS_FUNC_MACRO un
   Function ${un}PrintDetailsFunc
     ; Ensure we preserve the global var $0 with an exchange.
     ; $0 is on the top of the stack and $details_var is copied
     ; to $0.
-    ; Stack: [details var, ...] -> [orig $0 val, ...] 
+    ; Stack: [details var, ...] -> [orig $0 val, ...]
     Exch $0
-	  
-    ; Ensure we log to both outputs and restore the old print location
-	  SetDetailsPrint both
-	  DetailPrint "$0"
-	  SetDetailsPrint lastused
-	  
+    ; Ensure we log to both outputs and restore the old print location.
+      SetDetailsPrint both
+      DetailPrint "$0"
+      SetDetailsPrint lastused
+      
     ; Restore $0
     ; Stack: [orig $0 val, ...] -> [...] 
     Pop $0
@@ -46,20 +45,20 @@
 !insertmacro _STACKDRIVER_PRINT_DETAILS_FUNC_MACRO "un."
 
 ; Macro for Print to help pass along the details parameter
-; on the stack
+; on the stack.
 !macro _STACKDRIVER_PRINT_DETAILS_MACRO details
   Push "${details}"
   Call PrintDetailsFunc
 !macroend
 
 ; Macro for UnPrint to help pass along the details parameter
-; on the stack
+; on the stack.
 !macro _STACKDRIVER_UN_PRINT_DETAILS_MACRO details
   Push "${details}"
   Call un.PrintDetailsFunc
 !macroend
 
-; Define the Print/UnPrint functions for ease of calling
+; Define the Print/UnPrint functions for ease of calling.
 !define Print "!insertmacro _STACKDRIVER_PRINT_DETAILS_MACRO"
 !define UnPrint "!insertmacro _STACKDRIVER_UN_PRINT_DETAILS_MACRO"
 ;--------------------------------
@@ -78,33 +77,33 @@
 ;--------------------------------
 
 ; Generate two execute command functions, one for installer sections
-; and one for uninstaller sections
+; and one for uninstaller sections.
 !macro _STACKDRIVER_EXECUTE_COMMAND_FUNC_MACRO un
-	Function ${un}ExecuteCommand
+  Function ${un}ExecuteCommand
     ; Ensure we preserve the global vars $0, $1, $2.
     ; Stack: [command var, params var, ...]
-	  Exch $0 ; Command variable ; [command var, params var, ...] -> [orig $0, params var, ...]
-	  Exch    ; [orig $0, params var, ...] -> [params var, orig $0, ...]
-	  Exch $1 ; [params var, orig $0, ...] -> [orig $1, orig $0, ...]
-	  Push $2 ; [orig $1, orig $0, ...] -> [orig $2, orig $1, orig $0, ...]
-	  
-    ; Get the absolute location of the cmd.exe executable
-	  ReadEnvStr $2 COMSPEC
-	  
-	  ; Using nsExec::Exex over Exec as it hides the cmd pop up
-	  nsExec::Exec '"$2" /C "$\"$0$\" $1"'
+    Exch $0 ; Command variable ; [command var, params var, ...] -> [orig $0, params var, ...]
+    Exch    ; [orig $0, params var, ...] -> [params var, orig $0, ...]
+    Exch $1 ; [params var, orig $0, ...] -> [orig $1, orig $0, ...]
+    Push $2 ; [orig $1, orig $0, ...] -> [orig $2, orig $1, orig $0, ...]
+
+    ; Get the absolute location of the cmd.exe executable.
+    ReadEnvStr $2 COMSPEC
+
+    ; Using nsExec::Exex over Exec as it hides the cmd pop up.
+    nsExec::Exec '"$2" /C "$\"$0$\" $1"'
     
     ; Restore $0, $1, $2
     ; Stack: [orig $2, orig $1, orig $0, ...] -> [...] 
-	  Pop $2
+    Pop $2
     Pop $1
     Pop $0
-    FunctionEnd
+  FunctionEnd
 !macroend
 !insertmacro _STACKDRIVER_EXECUTE_COMMAND_FUNC_MACRO ""
 !insertmacro _STACKDRIVER_EXECUTE_COMMAND_FUNC_MACRO "un."
 
-; Macro for ExecuteCommand to help pass along the parameters
+; Macro for ExecuteCommand to help pass along the parameters.
 ; via the stack
 !macro _STACKDRIVER_EXECUTE_COMMAND_MACRO Command Parameters
   Push "${Parameters}"
@@ -112,7 +111,7 @@
   Call ExecuteCommand
 !macroend
 
-; Macro for UnExecuteCommand to help pass along the parameters
+; Macro for UnExecuteCommand to help pass along the parameters.
 ; via the stack
 !macro _STACKDRIVER_UN_EXECUTE_COMMAND_MACRO Command Parameters
   Push "${Parameters}"
@@ -120,7 +119,7 @@
   Call un.ExecuteCommand
 !macroend
 
-; Define the ExecuteCommand/UnExecuteCommand functions for ease of calling
+; Define the ExecuteCommand/UnExecuteCommand functions for ease of calling.
 !define ExecuteCommand "!insertmacro _STACKDRIVER_EXECUTE_COMMAND_MACRO"
 !define UnExecuteCommand "!insertmacro _STACKDRIVER_UN_EXECUTE_COMMAND_MACRO"
 ;--------------------------------
@@ -134,13 +133,13 @@
 ; Prompts the user the given program (name param) is already installed.
 ; If the candidate clicks 'OK' the uninstaller (uninstaller param) will
 ; be executed.  If they click 'Cancel' the install will be aborted.
-; NOTE: Does not support silent notification if an old version is installed
+; NOTE: Does not support silent notification if an old version is installed.
 ; 
 ; Call with:
 ;   ${RemoveOldVersion}   "Name" "Full path to uninstall executable"
 ;--------------------------------
 !macro _STACKDRIVER_REMOVE_OLD_VERSION_MACRO name uninstaller
-  ; Notify the user the program is already installed
+  ; Notify the user the program is already installed.
   MessageBox MB_OKCANCEL \
     "${name} is already installed.  Click 'OK' to remove the old \
     version and continue or 'Cancel' to exit the installer" \
@@ -150,7 +149,7 @@
   abort:
     Abort
    
-  ; Unistall the program, honor silent options.
+  ; Uninstall the program, honor silent options.
   remove:
     ${If} ${Silent}
       ExecWait '"${uninstaller}" /S _?=$INSTDIR'
@@ -159,7 +158,7 @@
     ${EndIf}
 !macroend
 
-; Define the RemoveOldVersion function for ease of calling
+; Define the RemoveOldVersion function for ease of calling.
 !define RemoveOldVersion "!insertmacro _STACKDRIVER_REMOVE_OLD_VERSION_MACRO"
 ;--------------------------------
 ; END RemoveOldVersion
@@ -207,7 +206,7 @@
 ;--------------------------------
 ; Defines RemoveRegisterUninstallSoftware
 ; 
-; Removes the register for the software in the uninstall registry
+; Removes the registration for the software in the uninstall registry.
 ; 
 ; Call with:
 ;   ${RemoveRegisterUninstallSoftware} "Software Name"
@@ -216,7 +215,7 @@
   DeleteRegKey SHCTX "${UNINST_REG_KEY}\${name}"
 !macroend
  
- ; Define the RemoveRegisterUninstallSoftware function for ease of calling
+ ; Define the RemoveRegisterUninstallSoftware function for ease of calling.
 !define RemoveRegisterUninstallSoftware "!insertmacro _STACKDRIVER_REMOVE_REGISTER_UNINSTALL_SOFTWARE_MACRO"
 ;--------------------------------
 ; END RemoveRegisterUninstallSoftware

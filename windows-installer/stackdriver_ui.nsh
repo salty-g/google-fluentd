@@ -1,8 +1,12 @@
 ;--------------------------------
 ; Shared UI, pages and configuration for Stackdriver installers.
+;
+; forceInstallDir: If true the installer will force the users
+;     to install into the default install location.
 ;--------------------------------
 
-!macro STACKDRIVER_UI fixedInstallDir
+
+!macro STACKDRIVER_UI forceInstallDir
 ;--------------------------------
 ; GLOBAL VARIABLES
 ;--------------------------------
@@ -17,7 +21,7 @@
 ;--------------------------------
 
 ; Don't show any branding text, branding is handled with MUI
-; variables below
+; variables below.
 BrandingText " "
 
 
@@ -25,8 +29,8 @@ BrandingText " "
 ; INCLUDES
 ;--------------------------------
 
-; Use for the modern UI
-!include "MUI2.nsh" 
+; Used for the modern UI.
+!include "MUI2.nsh"
 
 ; Used to disable the install path option.
 !include "WinMessages.nsh"
@@ -36,23 +40,23 @@ BrandingText " "
 ; INSTALLER SETTINGS
 ;--------------------------------
 
-; Set the default icon for the installer
+; Set the default icon for the installer.
 !define MUI_ICON "${UI_ICON}"
 
 ; Welcome page image
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${UI_WELCOME_IMAGE}"
 
-; Show a header image for all pages that have headers
-; NOTE: This also sets the header image for the uninstaller
+; Show a header image for all pages that have headers.
+; NOTE: This also sets the header image for the uninstaller.
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "${UI_HEADER_IMAGE}"
-; Don't stretch the image as we have an exact fit
-!define MUI_HEADERIMAGE_BITMAP_NOSTRETCH 
-; Make the header text transparent and rely on the header
+; Don't stretch the image as we have an exact fit.
+!define MUI_HEADERIMAGE_BITMAP_NOSTRETCH
+; Make the header text transparent and rely on the header.
 !define MUI_HEADER_TRANSPARENT_TEXT
 
 ; Don't automatically advance to the final page after an install,
-; this will allow users to look at the install details if they wish
+; this will allow users to look at the install details if they wish.
 !define MUI_FINISHPAGE_NOAUTOCLOSE
 
 
@@ -60,14 +64,14 @@ BrandingText " "
 ; UNINSTALLER SETTINGS
 ;--------------------------------
 
-; Set the default icon for the uninstaller
+; Set the default icon for the uninstaller.
 !define MUI_UNICON "${UI_ICON}"
 
-; Welcome page image
+; Welcome page image.
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP "${UI_WELCOME_IMAGE}"
 
 ; Don't automatically advance to the final page after an uninstall,
-; this will allow users to look at the uninstall details if they wish
+; this will allow users to look at the uninstall details if they wish.
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
 
@@ -96,16 +100,15 @@ BrandingText " "
 ; INSTALLER FUNCTIONS
 ;--------------------------------
 
-; Disables selection of the instal location if 'fixedInstallDir' is set
-; to 'true'
+; Disables selection of the install location if 'forceInstallDir' is 'true'.
 Function DisableInstallPathSelection
-  ${If} ${fixedInstallDir} == "true"
-    ; Get the page directory window
+  ${If} ${forceInstallDir} == "true"
+    ; Get the page directory window.
     FindWindow $0 "#32770" "" $HWNDPARENT
     
-    ; Get the installer text box
+    ; Get the installer text box.
     GetDlgItem $1 $0 1019
-    ; Set the installer text box to read only
+    ; Set the installer text box to read only.
     SendMessage $1 ${EM_SETREADONLY} 1 0
     
     ; Get the installer browse button.
