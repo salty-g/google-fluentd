@@ -22,13 +22,13 @@
 !define REG_KEY "Software\${COMPANY}\LoggingAgent"
 
 ; Uninstaller registry key, used to register the logging agent.
-!define STACKDRIVER_LOGGING_UNINST_REG_KEY "${UNINST_REG_KEY}\${COMPRESSED_NAME}"
-
-; Directory used to install all files into.  This makes uninstall easier and safer.
-!define MAIN_INSTDIR "$INSTDIR\Main"
+!define STACKDRIVER_UNINST_REG_KEY "${UNINST_REG_KEY}\${COMPRESSED_NAME}"
 
 ; Absolute location of the uninstaller.
 !define UNINSTALLER_LOCATION "$INSTDIR\uninstall.exe"
+
+; Directory used to install all files into.  This makes uninstall easier and safer.
+!define MAIN_INSTDIR "$INSTDIR\Main"
 
 ; The name of fluentd config template file, this is bundled into the script.
 !define FLUENTD_CONFIG_TEMPLATE "fluent-template.conf"
@@ -41,7 +41,7 @@
 
 
 ;--------------------------------
-; GENERAL CONFIGURATION 
+; GENERAL CONFIGURATION
 ;--------------------------------
 
 ; Needed to properly display all languages, may not work on older windows OSs.
@@ -68,7 +68,7 @@ RequestExecutionLevel admin
 
 ; Stackdriver includes
 !include "stackdriver_language_util.nsh"
-!include "stackdriver_ui.nsh" 
+!include "stackdriver_ui.nsh"
 !include "stackdriver_util.nsh"
 
 
@@ -102,15 +102,15 @@ ${StrTrimNewLines}
 Function .onInit
   ; Set the install directory, we cannot do this at compile time as we are
   ; using a runtime variable.
-  ReadEnvStr $0 SYSTEMDRIVE 
-  StrCpy $INSTDIR "$0\${COMPRESSED_NAME}" 
+  ReadEnvStr $0 SYSTEMDRIVE
+  StrCpy $INSTDIR "$0\${COMPRESSED_NAME}"
 
   ; Display the language selection dialog
   !insertmacro MUI_LANGDLL_DISPLAY
 
   ; Check for a previously installed installed version.  If one exists
   ; prompt the user to remove it before continuing.
-  ReadRegStr $0 SHCTX "${STACKDRIVER_LOGGING_UNINST_REG_KEY}" "UninstallString"
+  ReadRegStr $0 SHCTX "${STACKDRIVER_UNINST_REG_KEY}" "UninstallString"
   ${If} $0 != ""
     ${RemoveOldVersion} "${DISPLAY_NAME}" $0
   ${EndIf}
@@ -120,13 +120,13 @@ Function .onInit
 FunctionEnd
 
 ; Verify the install directory is correct.  There is a bug in a gem
-; that this install relies on; if the file path has a space in it, it
+; that this install relies on: if the file path has a space in it, it
 ; will fail to install.  For now we disable the UI to change the path
 ; but also need to disable it here in case of silent installs.
 Function .onVerifyInstDir
   ; Check that the install direcotry has not changed.  If it has, notify
   ; the user and abort.
-  ReadEnvStr $0 SYSTEMDRIVE 
+  ReadEnvStr $0 SYSTEMDRIVE
   ${If} $INSTDIR != "$0\${COMPRESSED_NAME}"
     MessageBox MB_OK "Invalid install directory '$INSTDIR', must be '$0\${COMPRESSED_NAME}'"
     Abort
@@ -138,7 +138,7 @@ FunctionEnd
 ; INSTALLER SECTIONS
 ;--------------------------------
 
-Section "Install" 
+Section "Install"
   ; Print messages to the details list view not the text (status) bar,
   ; this provides a cleaner install when files are being unzipped.
   SetDetailsPrint listonly
@@ -166,7 +166,7 @@ Section "Install"
 
   ; Extract the needed files and show status
   ${Print} "Extracting files to $INSTDIR..."
-  nsisunz::Unzip "$OUTDIR\${ZIP_FILE}" "${MAIN_INSTDIR}"  
+  nsisunz::Unzip "$OUTDIR\${ZIP_FILE}" "${MAIN_INSTDIR}"
   Pop $0
 
   ; Ensure the file unzipped if not notify the user and abort.
@@ -186,7 +186,7 @@ Section "Install"
   ; Copy and update the fluentd config and show status, we cannot use most of
   ; the needed plugins that would do this in a better way as they do not work
   ; well with unicode on and fail (mostly silenely).
-  ; NOTE: This is very dependent on the config.  It should have a 
+  ; NOTE: This is very dependent on the config.  It should have a
   ; place holder 'POS_FILE_PLACE_HOLDER' that will be replaced with a
   ; position file location in the current install directory.
   ${Print} "Updating configuration files..."

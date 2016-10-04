@@ -32,10 +32,10 @@
     ; Stack: [details var, ...] -> [orig $0 val, ...]
     Exch $0
     ; Ensure we log to both outputs and restore the old print location.
-      SetDetailsPrint both
-      DetailPrint "$0"
-      SetDetailsPrint lastused
-      
+    SetDetailsPrint both
+    DetailPrint "$0"
+    SetDetailsPrint lastused
+
     ; Restore $0
     ; Stack: [orig $0 val, ...] -> [...] 
     Pop $0
