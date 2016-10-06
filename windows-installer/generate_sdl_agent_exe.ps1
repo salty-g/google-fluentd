@@ -1,22 +1,22 @@
 <#
  Script to pull down all needed dependencies and generate an unsigned 
- Stackdriver Logging Agent installer. 
- 
+ Stackdriver Logging Agent installer.
+
  This should be run on a clean GCE windows instance.
- 
+
  The installer assumes that all NSIS files (.nsi, .nsh, and needed image files)
  are in the same folder as the installer script.  The script will output the
- complete Stackdriver Logging Agent Installer named StackdriverLoggingAgent_unsigned.exe
+ complete Stackdriver Logging Agent Installer named StackdriverLoggingAgent_unsigned.exe.
 #>
 
 ##############################
 #  VARIABLES - DIRECTORIES
 ##############################
 
-# Just install into 'C:' for simplicity 
+# Just install into 'C:' for simplicity.
 $BASE_INSTALLER_DIR = "C:"
 
-# The path of where ruby and all gems will be.  This is the portion that will be 
+# The path of where ruby and all gems will be.  This is the portion that will be
 # packaged and zipped up.
 $SD_LOGGING_AGENT_DIR = $BASE_INSTALLER_DIR + "\StackdriverLoggingAgent"
 
@@ -29,7 +29,7 @@ $NSIS_DIR = $BASE_INSTALLER_DIR + "\NSIS"
 # The location of the NSIS plugin to unzip files.
 $NSIS_UNZU_DIR = $BASE_INSTALLER_DIR + "\NSISunzU"
 
-# The location for unicode plugins for NSIS
+# The location for unicode plugins for NSIS.
 $NSIS_UNICODE_PLUGIN_DIR = $NSIS_DIR + "\Plugins\x86-unicode"
 
 
@@ -67,7 +67,7 @@ $RUBY_DEV_KIT = $RUBY_DEV_DIR + "\dk.rb"
 # The location of the executable to compile an NSIS installer.
 $NSIS_MAKE = $NSIS_DIR + "\makensis.exe"
 
-# The location of the dll of the plugin to unzip files in an NSIS installer
+# The location of the dll of the plugin to unzip files in an NSIS installer.
 $NSIS_UNZU_DLL = $NSIS_UNZU_DIR + "\NSISunzU\Plugin unicode\nsisunz.dll"
 
 # Output location of the zip compliled into the installer. It will place where ever
@@ -80,7 +80,7 @@ $STACKDRIVER_NSI = $PSScriptRoot + "\stackdriver_logging_agent.nsi"
 
 
 ##############################
-#  STEP 1 - Create the needed directories
+#  STEP 1 - CREATE THE NEEDED DIRECTORIES.
 ##############################
 
 mkdir $SD_LOGGING_AGENT_DIR 
@@ -89,7 +89,7 @@ mkdir $NSIS_UNZU_DIR
 
 
 ##############################
-#  STEP 2 - Download the needed dependencies
+#  STEP 2 - DOWNLOAD THE NEEDED DEPENDENCIES.
 ##############################
 
 $webClient = new-object System.Net.WebClient
@@ -100,10 +100,10 @@ $webClient.DownloadFile($NSIS_UNZU_INSTALLER_LINK, $NSIS_UNZU_ZIP)
 
 
 ##############################
-#  STEP 3 - INSTALL RUBY
+#  STEP 3 - INSTALL RUBY.
 ##############################
 
-# Install ruby to the main install location and wait for it to finish
+# Install ruby to the main install location and wait for it to finish.
 & $RUBY_INSTALLER /verysilent /tasks="assocfiles,modpath" /dir=$SD_LOGGING_AGENT_DIR | Out-Null
 
 # Remove the ruby uninstallers and the installer.
@@ -112,10 +112,10 @@ rm $RUBY_INSTALLER
 
 
 ##############################
-#  STEP 4 - INSTALL THE RUBY DEV KIT
+#  STEP 4 - INSTALL THE RUBY DEV KIT.
 ##############################
 
-# Install ruby dev kti and wait for it to finish
+# Install ruby dev kti and wait for it to finish.
 & $RUBY_DEV_INSTALLER -o $RUBY_DEV_DIR   -y | Out-Null
 
 # Remove the ruby dev kit installer.
@@ -126,7 +126,7 @@ rm $RUBY_DEV_INSTALLER
 & $RUBY_EXE $RUBY_DEV_KIT install
 
 
-# Update the environment paths
+# Update the environment paths.
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 
@@ -140,7 +140,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 # update any of them.
 #
 # We install all gems with '--no-ri --no-rdoc --no-document' so we don't pull in
-# unneeded docs that bloat the file size (and also seem to cause issues with unzipping)
+# unneeded docs that bloat the file size (and also seem to cause issues with unzipping).
 ###############################
 
 & $GEM_BAT update --system 2.4.8
@@ -150,7 +150,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 
 
 ##############################
-#  STEP 6 - ZIP THE FILES
+#  STEP 6 - ZIP THE FILES.
 ##############################
 
 Add-Type -Assembly System.IO.Compression.FileSystem
@@ -158,21 +158,21 @@ Add-Type -Assembly System.IO.Compression.FileSystem
 
 
 ##############################
-#  STEP 7 - INSTALL NSIS
+#  STEP 7 - INSTALL NSIS.
 ##############################
 
-# Install SISI and wait for it to finish
+# Install SISI and wait for it to finish.
 & $NSIS_INSTALLER /S /D=$NSIS_DIR | Out-Null
 
-# Unpack the nsis unzip plugin
+# Unpack the nsis unzip plugin.
 [System.IO.Compression.ZipFile]::ExtractToDirectory($NSIS_UNZU_ZIP, $NSIS_UNZU_DIR)
 
-# Copy the needed DLL from the NSIS plugin into the NSIS pluging directory
+# Copy the needed DLL from the NSIS plugin into the NSIS pluging directory.
 cp $NSIS_UNZU_DLL $NSIS_UNICODE_PLUGIN_DIR
 
 
 ##############################
-#  STEP 8 - Compile the NSIS script
+#  STEP 8 - COMPILE THE NSIS SCRIPT.
 ##############################
 
 & $NSIS_MAKE $STACKDRIVER_NSI

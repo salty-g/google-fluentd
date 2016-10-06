@@ -21,7 +21,7 @@
 ; Registry entry key to store arbitrary information.
 !define REG_KEY "Software\${COMPANY}\LoggingAgent"
 
-; Uninstaller registry key, used to register the logging agent.
+; Uninstaller registry key, used to register the agent.
 !define STACKDRIVER_UNINST_REG_KEY "${UNINST_REG_KEY}\${COMPRESSED_NAME}"
 
 ; Absolute location of the uninstaller.
