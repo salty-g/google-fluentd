@@ -76,7 +76,7 @@ $STACKDRIVER_ZIP = $PSScriptRoot + "\StackdriverLoggingAgent.zip"
 
 # The location of the Stackdriver Logging Agent installer script. It will look
 # where ever this script is run from.
-$STACKDRIVER_NSI = $PSScriptRoot + "\stackdriver_logging_agent.nsi"
+$STACKDRIVER_NSI = $PSScriptRoot + "\setup.nsi"
 
 
 ##############################
@@ -115,7 +115,7 @@ rm $RUBY_INSTALLER
 #  STEP 4 - INSTALL THE RUBY DEV KIT.
 ##############################
 
-# Install ruby dev kti and wait for it to finish.
+# Install ruby dev kit and wait for it to finish.
 & $RUBY_DEV_INSTALLER -o $RUBY_DEV_DIR   -y | Out-Null
 
 # Remove the ruby dev kit installer.
