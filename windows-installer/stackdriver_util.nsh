@@ -92,8 +92,8 @@
 
     ; Using nsExec::Exec over Exec as it hides the cmd pop up.
     nsExec::Exec '"$2" /C "$\"$0$\" $1"'
-	
-	; Restoring of the Stack occurs in the macros.
+
+    ; The stack is restored by the macros.
   FunctionEnd
 !macroend
 !insertmacro _STACKDRIVER_EXECUTE_COMMAND_FUNC_MACRO ""
