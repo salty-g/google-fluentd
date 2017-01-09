@@ -241,7 +241,7 @@ Section "Install"
   ; Register the software so it will appear in the add/remove programs menu.
   ${Print} "Registering ${DISPLAY_NAME}..."
   ${RegisterUninstallSoftware} \
-      "${DISPLAY_NAME}" "${UNINSTALLER_LOCATION}" "${UI_ICON}" "${COMPANY}" "$0"
+      "${DISPLAY_NAME}" "${COMPRESSED_NAME}" "${UNINSTALLER_LOCATION}" "${UI_ICON}" "${COMPANY}" "$0"
 
   ; Update the paths in ruby files.
   ${ExecuteCommand} "${MAIN_INSTDIR}\bin\ruby.exe" "'${MAIN_INSTDIR}\bin\gem' \
@@ -288,7 +288,7 @@ Section "Uninstall"
 
   ; Remove the software from the registry.
   ${UnPrint} "Unregistering the ${DISPLAY_NAME}..."
-  ${RemoveRegisterUninstallSoftware} "${DISPLAY_NAME}"
+  ${RemoveRegisterUninstallSoftware} "${COMPRESSED_NAME}"
 
   ; Clean up any other registry entires used.
   DeleteRegKey HKCU "${REG_KEY}"
