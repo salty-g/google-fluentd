@@ -6,7 +6,7 @@
 
  The installer assumes that all NSIS files (.nsi, .nsh, and needed image files)
  are in the same folder as the installer script.  The script will output the
- complete Stackdriver Logging Agent Installer named StackdriverLoggingAgent_unsigned.exe.
+ complete Stackdriver Logging Agent Installer named GoogleStackdriverLoggingAgent_unsigned.exe.
 #>
 
 ##############################
@@ -18,7 +18,7 @@ $BASE_INSTALLER_DIR = "C:"
 
 # The path of where ruby and all gems will be.  This is the portion that will be
 # packaged and zipped up.
-$SD_LOGGING_AGENT_DIR = $BASE_INSTALLER_DIR + "\StackdriverLoggingAgent"
+$SD_LOGGING_AGENT_DIR = $BASE_INSTALLER_DIR + "\GoogleStackdriverLoggingAgent"
 
 # The bin of dir of the agent.
 $SD_LOGGING_AGENT_DIR_BIN = $SD_LOGGING_AGENT_DIR + "\bin"
@@ -79,7 +79,7 @@ $NSIS_UNZU_DLL = $NSIS_UNZU_DIR + "\NSISunzU\Plugin unicode\nsisunz.dll"
 
 # Output location of the zip compliled into the installer. It will place where ever
 # this script it run from.
-$STACKDRIVER_ZIP = $PSScriptRoot + "\StackdriverLoggingAgent.zip"
+$STACKDRIVER_ZIP = $PSScriptRoot + "\GoogleStackdriverLoggingAgent.zip"
 
 # The location of the Stackdriver Logging Agent installer script. It will look
 # where ever this script is run from.

@@ -10,16 +10,16 @@
 ;--------------------------------
 
 ; Company or Publisher name.
-!define COMPANY "Stackdriver"
+!define COMPANY "Google"
 
 ; Software name used for display to users.
-!define DISPLAY_NAME "${COMPANY} Logging Agent"
+!define DISPLAY_NAME "${COMPANY} Stackdriver Logging Agent"
 
 ; Software name with no white space.
-!define COMPRESSED_NAME "${COMPANY}LoggingAgent"
+!define COMPRESSED_NAME "${COMPANY}StackdriverLoggingAgent"
 
 ; Registry entry key to store arbitrary information.
-!define REG_KEY "Software\${COMPANY}\LoggingAgent"
+!define REG_KEY "Software\${COMPANY}\StackdriverLoggingAgent"
 
 ; Uninstaller registry key, used to register the agent.
 !define STACKDRIVER_UNINST_REG_KEY "${UNINST_REG_KEY}\${COMPRESSED_NAME}"
