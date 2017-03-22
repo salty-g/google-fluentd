@@ -231,9 +231,9 @@ Section "Install"
       StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\winevtlog.pos'$\r$\n"
     ${EndIf}
 	
-	; Count the number of 'VERSION_LABEL_PLACE_HOLDER' instances.  It should only
+    ; Count the number of 'VERSION_LABEL_PLACE_HOLDER' instances.  It should only
     ; ever be 0 or 1.  We only have it in the template file once.
-	${WordFind} "$3" "VERSION_LABEL_PLACE_HOLDER" "#" $4
+    ${WordFind} "$3" "VERSION_LABEL_PLACE_HOLDER" "#" $4
 
     ; If we hit the place holder line replace it with the proper label.
     ${If} $4 == "1"
