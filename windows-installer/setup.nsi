@@ -230,7 +230,7 @@ Section "Install"
     ${WordFind} "$3" "CUSTOM_LOGS_DIR_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
 	  ; Fluentd doesn't properly glob windows paths.  This is a temporary
-	  ; fix until https://github.com/fluent/fluentd/pull/1541 is in.
+	  ; fix until https://github.com/fluent/fluentd/issues/1138 is solved.
 	  ${StrRep} "$5" "${CUSTOM_LOGS_DIR}\**\*" "\" "/"
       StrCpy $2 "  path '$5'$\r$\n"
     ${EndIf}
