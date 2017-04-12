@@ -33,6 +33,9 @@
 ; Directory to install all files into.  This makes uninstall easier and safer.
 !define MAIN_INSTDIR "$INSTDIR\Main"
 
+; Directory for the user to add custom logs.
+!define CUSTOM_LOGS_DIR "$INSTDIR\CustomLogs"
+
 ; The name of fluentd config template file, this is bundled into the script.
 !define FLUENTD_CONFIG_TEMPLATE "fluent-template.conf"
 
@@ -79,8 +82,9 @@ RequestExecutionLevel admin
 ; FUNCTIONS
 ;--------------------------------
 
-; Define StrTrimNewLines function to use below.
+; Define functions to use below.
 ${StrTrimNewLines}
+${StrRep}
 
 
 ;--------------------------------
@@ -185,13 +189,14 @@ Section "Install"
 
   ; Create a directory to store position files.
   CreateDirectory ${MAIN_INSTDIR}\pos
+  ; Create a directory for custom logs.
+  CreateDirectory ${CUSTOM_LOGS_DIR}
 
   ; Copy and update the fluentd config and show status, we cannot use most of
   ; the needed plugins that would do this in a better way as they do not work
   ; well with unicode on and fail (mostly silenely).
-  ; NOTE: This is very dependent on the config.  It should have a
-  ; place holder 'POS_FILE_PLACE_HOLDER' that will be replaced with a
-  ; position file location in the current install directory.
+  ; NOTE: This is very dependent on the config.  It should have multiple place
+  ; holders that will be replaced.
   ${Print} "Updating configuration files..."
 
   ; ----- Begin update fluent config -----
@@ -212,13 +217,29 @@ Section "Install"
 
     ; Trim out newlines as WordFind cannot handle them.
     ${StrTrimNewLines} $3 "$2"
-    ; Count the number of 'POS_FILE_PLACE_HOLDER' instances.  It should only
-    ; ever be 0 or 1.  We only have it in the template file once.
-    ${WordFind} "$3" "POS_FILE_PLACE_HOLDER" "#" $4
-
-    ; If we hit the place holder line replace it with the proper pos_file.
+	
+    ; Look for 'WIN_EVT_POS_FILE_PLACE_HOLDER', if found replace it with the
+    ; proper pos_file.
+    ${WordFind} "$3" "WIN_EVT_POS_FILE_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
       StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\winevtlog.pos'$\r$\n"
+    ${EndIf}
+
+    ; Look for 'CUSTOM_LOGS_DIR_PLACE_HOLDER', if found replace it with the
+    ; proper path.
+    ${WordFind} "$3" "CUSTOM_LOGS_DIR_PLACE_HOLDER" "#" $4
+    ${If} $4 == "1"
+	  ; Fluentd doesn't properly glob windows paths.  This is a temporary
+	  ; fix until https://github.com/fluent/fluentd/pull/1541 is in.
+	  ${StrRep} "$5" "${CUSTOM_LOGS_DIR}\**\*" "\" "/"
+      StrCpy $2 "  path '$5'$\r$\n"
+    ${EndIf}
+
+    ; Look for 'CUSTOM_LOGS_POS_FILE_PLACE_HOLDER', if found replace it with
+    ; the proper pos_file.
+    ${WordFind} "$3" "CUSTOM_LOGS_POS_FILE_PLACE_HOLDER" "#" $4
+    ${If} $4 == "1"
+      StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\customlogs.pos'$\r$\n"
     ${EndIf}
 
     ; Write the line to the config file.
