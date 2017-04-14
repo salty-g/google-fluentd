@@ -33,8 +33,8 @@
 ; Directory to install all files into.  This makes uninstall easier and safer.
 !define MAIN_INSTDIR "$INSTDIR\Main"
 
-; Directory for the user to add custom logs.
-!define CUSTOM_LOGS_DIR "$INSTDIR\CustomLogs"
+; Directory for the user to add custom configs.
+!define CUSTOM_CONFIG_DIR "$INSTDIR\config.d"
 
 ; The name of fluentd config template file, this is bundled into the script.
 !define FLUENTD_CONFIG_TEMPLATE "fluent-template.conf"
@@ -82,7 +82,7 @@ RequestExecutionLevel admin
 ; FUNCTIONS
 ;--------------------------------
 
-; Define functions to use below.
+; Define StrTrimNewLines and StrRep functions to use below.
 ${StrTrimNewLines}
 ${StrRep}
 
@@ -189,8 +189,8 @@ Section "Install"
 
   ; Create a directory to store position files.
   CreateDirectory ${MAIN_INSTDIR}\pos
-  ; Create a directory for custom logs.
-  CreateDirectory ${CUSTOM_LOGS_DIR}
+  ; Create a directory for custom configs.
+  CreateDirectory ${CUSTOM_CONFIG_DIR}
 
   ; Copy and update the fluentd config and show status, we cannot use most of
   ; the needed plugins that would do this in a better way as they do not work
@@ -225,21 +225,14 @@ Section "Install"
       StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\winevtlog.pos'$\r$\n"
     ${EndIf}
 
-    ; Look for 'CUSTOM_LOGS_DIR_PLACE_HOLDER', if found replace it with the
+    ; Look for 'CUSTOM_CONFIG_DIR_PLACE_HOLDER', if found replace it with the
     ; proper path.
-    ${WordFind} "$3" "CUSTOM_LOGS_DIR_PLACE_HOLDER" "#" $4
+    ${WordFind} "$3" "CUSTOM_CONFIG_DIR_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
 	  ; Fluentd doesn't properly glob windows paths.  This is a temporary
 	  ; fix until https://github.com/fluent/fluentd/issues/1138 is solved.
-	  ${StrRep} "$5" "${CUSTOM_LOGS_DIR}\**\*" "\" "/"
-      StrCpy $2 "  path '$5'$\r$\n"
-    ${EndIf}
-
-    ; Look for 'CUSTOM_LOGS_POS_FILE_PLACE_HOLDER', if found replace it with
-    ; the proper pos_file.
-    ${WordFind} "$3" "CUSTOM_LOGS_POS_FILE_PLACE_HOLDER" "#" $4
-    ${If} $4 == "1"
-      StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\customlogs.pos'$\r$\n"
+	  ${StrRep} "$5" "${CUSTOM_CONFIG_DIR}\**\*.conf" "\" "/"
+      StrCpy $2 "@include '$5'$\r$\n"
     ${EndIf}
 
     ; Write the line to the config file.
