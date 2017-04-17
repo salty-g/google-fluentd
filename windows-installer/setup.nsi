@@ -34,7 +34,7 @@
 !define MAIN_INSTDIR "$INSTDIR\Main"
 
 ; Directory for the user to add custom configs.
-!define CUSTOM_CONFIG_DIR "$INSTDIR\config.d"
+!define CUSTOM_CONFIG_DIR "config.d"
 
 ; The name of fluentd config template file, this is bundled into the script.
 !define FLUENTD_CONFIG_TEMPLATE "fluent-template.conf"
@@ -69,7 +69,7 @@ RequestExecutionLevel admin
 
 ; General includes.
 !include "FileFunc.nsh" ; Needed for GetSize
-!include "StrFunc.nsh" ; Needed for StrTrimNewLines
+!include "StrFunc.nsh" ; Needed for StrTrimNewLines and StrRep
 !include "WordFunc.nsh" ; Needed for WordFind
 
 ; Stackdriver includes.
@@ -229,9 +229,9 @@ Section "Install"
     ; proper path.
     ${WordFind} "$3" "CUSTOM_CONFIG_DIR_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
-	  ; Fluentd doesn't properly glob windows paths.  This is a temporary
-	  ; fix until https://github.com/fluent/fluentd/issues/1138 is solved.
-	  ${StrRep} "$5" "${CUSTOM_CONFIG_DIR}\**\*.conf" "\" "/"
+      ; Fluentd doesn't properly glob windows paths.  This is a temporary
+      ; fix until https://github.com/fluent/fluentd/issues/1138 is solved.
+      ${StrRep} "$5" "${CUSTOM_CONFIG_DIR}\**\*.conf" "\" "/"
       StrCpy $2 "@include '$5'$\r$\n"
     ${EndIf}
 
