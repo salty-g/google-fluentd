@@ -190,7 +190,7 @@ Section "Install"
   ; Create a directory to store position files.
   CreateDirectory ${MAIN_INSTDIR}\pos
   ; Create a directory for custom configs.
-  CreateDirectory ${CUSTOM_CONFIG_DIR}
+  CreateDirectory "$INSTDIR\${CUSTOM_CONFIG_DIR}"
 
   ; Copy and update the fluentd config and show status, we cannot use most of
   ; the needed plugins that would do this in a better way as they do not work
