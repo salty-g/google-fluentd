@@ -42,6 +42,15 @@
 ; Name of the main zip file, this is bundled into the script.
 !define ZIP_FILE "${COMPRESSED_NAME}.zip"
 
+; The version of this agent.
+!define VERSION "PLACEHOLDER"
+
+; NSIS doesn't have a good versioning story.  Until we have a good story for this
+; manually set it before each release.
+!if ${VERSION} == "PLACEHOLDER"
+    !error "VERSION is not set, please set the proper version before compiling."
+!endif
+
 
 ;--------------------------------
 ; GENERAL CONFIGURATION
@@ -212,6 +221,7 @@ Section "Install"
 
     ; Trim out newlines as WordFind cannot handle them.
     ${StrTrimNewLines} $3 "$2"
+
     ; Count the number of 'POS_FILE_PLACE_HOLDER' instances.  It should only
     ; ever be 0 or 1.  We only have it in the template file once.
     ${WordFind} "$3" "POS_FILE_PLACE_HOLDER" "#" $4
@@ -219,6 +229,15 @@ Section "Install"
     ; If we hit the place holder line replace it with the proper pos_file.
     ${If} $4 == "1"
       StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\winevtlog.pos'$\r$\n"
+    ${EndIf}
+	
+    ; Count the number of 'VERSION_LABEL_PLACE_HOLDER' instances.  It should only
+    ; ever be 0 or 1.  We only have it in the template file once.
+    ${WordFind} "$3" "VERSION_LABEL_PLACE_HOLDER" "#" $4
+
+    ; If we hit the place holder line replace it with the proper label.
+    ${If} $4 == "1"
+      StrCpy $2 "    $\"agent$\":$\"windows-stackdriver-logging-agent ${VERSION}$\"$\r$\n"
     ${EndIf}
 
     ; Write the line to the config file.
