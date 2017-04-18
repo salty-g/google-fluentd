@@ -33,6 +33,9 @@
 ; Directory to install all files into.  This makes uninstall easier and safer.
 !define MAIN_INSTDIR "$INSTDIR\Main"
 
+; Directory where the fluentd config will be placed.
+!define FLUENTD_CONFIG_DIRECTORY "$INSTDIR"
+
 ; Directory for the user to add custom configs.
 !define CUSTOM_CONFIG_DIR "config.d"
 
@@ -40,7 +43,7 @@
 !define FLUENTD_CONFIG_TEMPLATE "fluent-template.conf"
 
 ; Absolute location of the fluentd config file.
-!define FLUENTD_CONFIG_LOCATION "$INSTDIR\fluent.conf"
+!define FLUENTD_CONFIG_LOCATION "${FLUENTD_CONFIG_DIRECTORY}\fluent.conf"
 
 ; Name of the main zip file, this is bundled into the script.
 !define ZIP_FILE "${COMPRESSED_NAME}.zip"
@@ -190,11 +193,11 @@ Section "Install"
   ; Create a directory to store position files.
   CreateDirectory ${MAIN_INSTDIR}\pos
   ; Create a directory for custom configs.
-  CreateDirectory "$INSTDIR\${CUSTOM_CONFIG_DIR}"
+  CreateDirectory "${FLUENTD_CONFIG_DIRECTORY}\${CUSTOM_CONFIG_DIR}"
 
   ; Copy and update the fluentd config and show status, we cannot use most of
   ; the needed plugins that would do this in a better way as they do not work
-  ; well with unicode on and fail (mostly silenely).
+  ; well with unicode on and fail (mostly silently).
   ; NOTE: This is very dependent on the config.  It should have multiple place
   ; holders that will be replaced.
   ${Print} "Updating configuration files..."
@@ -222,6 +225,7 @@ Section "Install"
     ; proper pos_file.
     ${WordFind} "$3" "WIN_EVT_POS_FILE_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
+	  ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
       StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\winevtlog.pos'$\r$\n"
     ${EndIf}
 
@@ -232,6 +236,7 @@ Section "Install"
       ; Fluentd doesn't properly glob windows paths.  This is a temporary
       ; fix until https://github.com/fluent/fluentd/issues/1138 is solved.
       ${StrRep} "$5" "${CUSTOM_CONFIG_DIR}\**\*.conf" "\" "/"
+	  ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
       StrCpy $2 "@include '$5'$\r$\n"
     ${EndIf}
 
