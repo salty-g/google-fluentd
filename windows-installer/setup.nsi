@@ -225,18 +225,18 @@ Section "Install"
     ; proper pos_file.
     ${WordFind} "$3" "WIN_EVT_POS_FILE_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
-	  ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
+      ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
       StrCpy $2 "  pos_file '${MAIN_INSTDIR}\pos\winevtlog.pos'$\r$\n"
     ${EndIf}
 
-    ; Look for 'CUSTOM_CONFIG_DIR_PLACE_HOLDER', if found replace it with the
+    ; Look for 'CUSTOM_CONFIG_PLACE_HOLDER', if found replace it with the
     ; proper path.
-    ${WordFind} "$3" "CUSTOM_CONFIG_DIR_PLACE_HOLDER" "#" $4
+    ${WordFind} "$3" "CUSTOM_CONFIG_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
       ; Fluentd doesn't properly glob windows paths.  This is a temporary
       ; fix until https://github.com/fluent/fluentd/issues/1138 is solved.
       ${StrRep} "$5" "${CUSTOM_CONFIG_DIR}\**\*.conf" "\" "/"
-	  ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
+      ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
       StrCpy $2 "@include '$5'$\r$\n"
     ${EndIf}
 
