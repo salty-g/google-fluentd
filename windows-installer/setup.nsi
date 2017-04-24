@@ -15,14 +15,17 @@
 ; The parent product.
 !define PRODUCT "Stackdriver"
 
+; The service the agent is running.
+!define AGENT_SERVICE "Logging"
+
 ; Software name used for display to users.
-!define DISPLAY_NAME "${COMPANY} ${PRODUCT} Logging Agent ${VERSION}"
+!define DISPLAY_NAME "${COMPANY} ${PRODUCT} ${AGENT_SERVICE} Agent ${VERSION}"
 
 ; Software name with no white space.
-!define COMPRESSED_NAME "${COMPANY}${PRODUCT}LoggingAgent"
+!define COMPRESSED_NAME "${COMPANY}${PRODUCT}${AGENT_SERVICE}Agent"
 
 ; Registry entry key to store arbitrary information.
-!define REG_KEY "Software\${COMPANY}\${PRODUCT}\LoggingAgent"
+!define REG_KEY "Software\${COMPANY}\${PRODUCT}\${AGENT_SERVICE}Agent"
 
 ; Uninstaller registry key, used to register the agent.
 !define STACKDRIVER_UNINST_REG_KEY "${UNINST_REG_KEY}\${COMPRESSED_NAME}"
@@ -273,10 +276,16 @@ Section "Install"
   ;   '--reg-winsvc i'          -> Install as a windows service
   ;   '--reg-winsvc-auto-start' -> Enables the service to auto start at boot
   ;   '--reg-winsvc-fluentdopt' -> Passes along the config file
+  ;   '--winsvc-name'           -> The service name the agent will run as
+  ;   '--winsvc-display-name'   -> The display name of service
+  ;   '--winsvc-desc'           -> A description of the service
   ${Print} "Starting the ${DISPLAY_NAME}..."
   ${ExecuteCommand} "${MAIN_INSTDIR}\bin\fluentd.bat" \
       "--reg-winsvc i --reg-winsvc-auto-start \
-      --reg-winsvc-fluentdopt $\"-c $\'${FLUENTD_CONFIG_LOCATION}$\'$\""
+      --reg-winsvc-fluentdopt $\"-c $\'${FLUENTD_CONFIG_LOCATION}$\'$\" \
+      --winsvc-name $\"${PRODUCT}${AGENT_SERVICE}$\" \
+      --winsvc-display-name $\"${PRODUCT} ${AGENT_SERVICE}$\" \
+      --winsvc-desc $\"A service that collects and reports logs to ${PRODUCT}$\""
 
   ; All done!
   ${Print} "Installation Complete"
