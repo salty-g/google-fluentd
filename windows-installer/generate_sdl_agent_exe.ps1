@@ -181,7 +181,7 @@ cp $LIB_GCC_DLL $SD_LOGGING_AGENT_DIR_BIN
 
 $eventlog_rb = $SD_LOGGING_AGENT_DIR + '\lib\ruby\gems\2.3.0\gems\win32-eventlog-0.6.6\lib\win32\eventlog.rb'
 $needle = 'max_insert = [num, buf.read_string.scan(/%(\d+)/).map{ |x| x[0].to_i }.max].compact.max'
-$replacement = ((Get-Content eventlog_rb_replacement.txt) -join("`r`n"))
+$replacement = (Get-Content eventlog_rb_replacement.txt) -join("`r`n")
 
 (Get-Content $eventlog_rb).replace($needle, $replacement) | Set-Content $eventlog_rb
 
