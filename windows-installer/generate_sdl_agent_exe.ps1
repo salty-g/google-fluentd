@@ -177,6 +177,7 @@ cp $LIB_GCC_DLL $SD_LOGGING_AGENT_DIR_BIN
 # 
 # TODO: Remove when https://github.com/djberg96/win32-eventlog/pull/23 is merged and released.
 # TODO: Remove when https://github.com/djberg96/win32-eventlog/pull/24 is released.
+# TODO: Update $needle when https://github.com/djberg96/win32-eventlog/pull/24 is released.
 ##############################
 
 $eventlog_rb = $SD_LOGGING_AGENT_DIR + '\lib\ruby\gems\2.3.0\gems\win32-eventlog-0.6.6\lib\win32\eventlog.rb'
