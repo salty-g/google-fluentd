@@ -1,8 +1,3 @@
-# Image name stackdriver-logging-rhel7-build-image
-# To push to GCR
-# 1. $ docker tag stackdriver-logging-rhel7-build-image:<version> us.gcr.io/<project id>/stackdriver-logging-rhel7-build-image:<version>
-# 2. $ gcloud docker push us.gcr.io/<project id>/stackdriver-logging-rhel7-build-image:<version>
-
 FROM centos:7
 
 RUN yum update -y && yum -y install \
@@ -29,8 +24,5 @@ RUN curl -o fakeroot-libs.rpm "http://mirror.centos.org/centos/6/os/x86_64/Packa
   && git config --global user.name "stackdriverreader"
 
 RUN curl -sSL https://get.rvm.io | /bin/bash -s stable
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.2"
-RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
-RUN /bin/bash -l -c "gem update"
+RUN /bin/bash -l -c "rvm requirements && rvm install 2.2 && gem install bundler --no-ri --no-rdoc && gem update"
 

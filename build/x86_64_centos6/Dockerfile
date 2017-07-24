@@ -1,11 +1,6 @@
-# Image name stackdriver-logging-rhel6-build-image
-# To push to GCR
-# 1. $ docker tag stackdriver-logging-rhel6-build-image:<version> us.gcr.io/<project id>/stackdriver-logging-rhel6-build-image:<version>
-# 2. $ gcloud docker push us.gcr.io/<project id>/stackdriver-logging-rhel6-build-image:<version>
-
 FROM centos:6
 
-RUN yum update && yum install -y \
+RUN yum update -y && yum install -y \
   git \
   curl \
   which \
@@ -31,7 +26,4 @@ RUN rpm -ivh http://repoforge.mirror.constant.com/redhat/el6/en/x86_64/rpmforge/
   && git config --global user.name "stackdriverreader"
 
 RUN curl -sSL https://get.rvm.io | /bin/bash -s stable
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.2"
-RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
-RUN /bin/bash -l -c "gem update"
+RUN /bin/bash -l -c "rvm requirements && rvm install 2.2 && gem install bundler --no-ri --no-rdoc && gem update"
