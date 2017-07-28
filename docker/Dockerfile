@@ -13,6 +13,5 @@ RUN /opt/google-fluentd/embedded/bin/gem uninstall fluent-plugin-google-cloud \
 
 COPY google-fluentd.conf /etc/google-fluentd/google-fluentd.conf
 
-
 CMD sed -i "s/metadata-agent/$METADATA_AGENT_HOSTNAME/" "/etc/google-fluentd/google-fluentd.conf" \
     && /usr/sbin/google-fluentd
