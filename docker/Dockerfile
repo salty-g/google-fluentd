@@ -1,7 +1,5 @@
 FROM ubuntu:xenial
 
-ENV METADATA_AGENT_HOSTNAME ""
-
 RUN apt-get update \
     && apt-get install -y \
         curl \
@@ -13,6 +11,8 @@ RUN apt-get update \
     && apt-get autoremove
 
 COPY google-fluentd.conf /etc/google-fluentd/google-fluentd.conf
+
+ENV METADATA_AGENT_HOSTNAME ""
 
 CMD sed -i "s/metadata-agent/$METADATA_AGENT_HOSTNAME/" "/etc/google-fluentd/google-fluentd.conf" \
     && /usr/sbin/google-fluentd
