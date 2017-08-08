@@ -1,5 +1,7 @@
 FROM ubuntu:xenial
 
+ENV METADATA_AGENT_HOSTNAME ""
+
 RUN apt-get update \
     && apt-get install -y \
         curl \
