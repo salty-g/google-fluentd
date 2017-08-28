@@ -14,7 +14,6 @@ end
 # On Mac, this file blocks package building at health check so add to whitelist
 whitelist_file "libjemalloc\.1\.dylib"
 
-source :url => "http://www.canonware.com/download/jemalloc/jemalloc-#{version}.tar.bz2"
 relative_path "jemalloc-#{version}"
 
 env = with_standard_compiler_flags(with_embedded_path)
