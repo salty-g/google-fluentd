@@ -7,7 +7,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | bash \
     && /opt/google-fluentd/embedded/bin/gem uninstall fluent-plugin-google-cloud \
-    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-google-cloud -v 0.6.4.pre.3 \
+    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-google-cloud -v 0.6.8.pre.1 \
     && apt-get autoremove
 
 COPY google-fluentd.conf /etc/google-fluentd/google-fluentd.conf
