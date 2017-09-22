@@ -5,8 +5,6 @@ RUN apt-get update \
         curl \
         lsb-release \
     && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | bash \
-    && /opt/google-fluentd/embedded/bin/gem uninstall fluent-plugin-google-cloud \
-    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-google-cloud -v 0.6.8 \
     && apt-get autoremove \
     && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf" \
     && rm -rf /var/lib/apt/lists/*
