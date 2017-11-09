@@ -9,4 +9,8 @@ if [ ! -z "$(ls /host/lib/libsystemd* 2>/dev/null)" ]; then
   cp -a /host/lib/libsystemd* /lib/x86_64-linux-gnu/
 fi
 
+if [ ! -z "$METADATA_AGENT_HOSTNAME" ]; then
+  sed -i "s/local-metadata-agent.stackdriver.com/$METADATA_AGENT_HOSTNAME/" /etc/google-fluentd/google-fluentd.conf
+fi
+
 /usr/sbin/google-fluentd $@
