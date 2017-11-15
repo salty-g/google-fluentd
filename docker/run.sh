@@ -14,4 +14,4 @@ if [ -n "$METADATA_AGENT_HOSTNAME" ]; then
     /etc/google-fluentd/google-fluentd.conf
 fi
 
-/usr/sbin/google-fluentd $@
+/usr/sbin/google-fluentd "$@"
