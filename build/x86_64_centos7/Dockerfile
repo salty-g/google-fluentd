@@ -25,4 +25,3 @@ RUN curl -o fakeroot-libs.rpm "http://mirror.centos.org/centos/6/os/x86_64/Packa
 
 RUN curl -sSL https://get.rvm.io | /bin/bash -s stable
 RUN /bin/bash -l -c "rvm requirements && rvm install 2.2 && gem install bundler --no-ri --no-rdoc && gem update"
-
