@@ -23,14 +23,14 @@ Dir.chdir(gp.target_dir) {
       if v == 'latest'
         output = `gem fetch #{n} --platform ruby`.strip.split(' ')
         fail 'Unexpected output: #{output}' unless output[0] == 'Downloaded'
-	fail 'Unexpected output: #{output}' unless output.size == 2
+        fail 'Unexpected output: #{output}' unless output.size == 2
         downloaded_gem_path = "#{output[1]}.gem"
         # Extract the gem's version from the output `gem fetch`.
         # E.g., extract "1.8.7" from "Downloaded grpc-1.8.7".
         actual_version = output[1].dup
         if actual_version.slice!("#{n}-").nil?
-	  fail "Unexpected gem name: #{actual_version}"
-	end
+          fail "Unexpected gem name: #{actual_version}"
+        end
         path = sprintf(file_format, index, n, actual_version)
         `mv #{downloaded_gem_path} #{path}`
       else
