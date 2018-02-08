@@ -30,15 +30,11 @@
   flush_interval 5s
   # Enforce some limit on the number of retries.
   disable_retry_limit false
-  # The maximum number of retries for sending a chunk. After this many of
-  # retries, the given chunk will be discarded.
-  retry_limit 8
-  # Wait 1 second before the first retry. The wait interval will be doubled on
-  # each following retry (2s, 4s, 8s...) until it reaches the max_retry_wait.
-  retry_wait 1
-  # Never wait longer than 5 minutes between retries. If the wait interval
-  # reaches this limit, the exponentiation stops.
-  max_retry_wait 300
+  # After 3 retries, a given chunk will be discarded.
+  retry_limit 3
+  # Wait 10 seconds before the first retry. The wait interval will be doubled on
+  # each following retry (20s, 40s...) until it hits the retry limit.
+  retry_wait 10
   # Use multiple threads for processing.
   num_threads 8
   # Use the gRPC transport.
