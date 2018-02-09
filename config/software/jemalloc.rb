@@ -20,7 +20,7 @@ end
 version("5.0.1") do
   sha512 = '8cb5957a5724eb2bbad120cf0028ea8b2b14b4a416c1751b7c967351a7fd51135058ea0d3c4dc1d127c86f3aa7e9fd5ef101857110aabfdb7789427791c432c3'
   source :sha512 => sha512,
-         :url => "http://src.fedoraproject.org/repo/pkgs/jemalloc/jemalloc-#{version}.tar.bz2/#{sha512}/jemalloc-#{version}.tar.bz2"
+         :url => "http://src.fedoraproject.org/repo/pkgs/jemalloc/jemalloc-#{version}.tar.bz2/sha512/#{sha512}/jemalloc-#{version}.tar.bz2"
 end
 
 # On Mac, this file blocks package building at health check so add to whitelist
