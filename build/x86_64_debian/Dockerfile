@@ -15,4 +15,4 @@ RUN /bin/bash -l -c "apt-get update -y && apt-get install -y \
   && git config --global user.email \"stackdriver-github-reader@google.com\" \
   && git config --global user.name \"stackdriverreader\""
 
-RUN /bin/bash -l -c "rvm requirements && rvm install 2.2 && gem install bundler --no-ri --no-rdoc && gem update"
+RUN /bin/bash -l -c "rvm requirements && rvm install 2.4 && gem install bundler --no-ri --no-rdoc && gem update"

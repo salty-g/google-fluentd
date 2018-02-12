@@ -26,4 +26,4 @@ RUN rpm -ivh http://repoforge.mirror.constant.com/redhat/el6/en/x86_64/rpmforge/
   && git config --global user.name "stackdriverreader"
 
 RUN curl -sSL https://get.rvm.io | /bin/bash -s stable
-RUN /bin/bash -l -c "rvm requirements && rvm install 2.2 && gem install bundler --no-ri --no-rdoc && gem update"
+RUN /bin/bash -l -c "rvm requirements && rvm install 2.4 && gem install bundler --no-ri --no-rdoc && gem update"
