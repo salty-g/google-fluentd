@@ -3,21 +3,21 @@ FROM centos:6
 ENV PATH ${PATH}:/usr/local/bin
 
 RUN yum update -y && yum install -y \
-  git \
+  autoconf \
+  bzip2 \
+  centos-release-SCL \
   curl \
-  which \
-  procps \
+  expect \
   gcc-c++ \
-  zlib-devel \
-  redhat-lsb-core \
+  git \
   glibc-devel \
   patch \
-  bzip2 \
+  procps \
+  redhat-lsb-core \
   rpm-build \
   rpm-sign \
-  autoconf \
-  expect \
-  centos-release-SCL \
+  which \
+  zlib-devel \
   && rpm -ivh http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm \
   && yum --enablerepo=rpmforge-extras install -y git \
   && gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
