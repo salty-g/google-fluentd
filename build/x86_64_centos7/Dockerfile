@@ -1,5 +1,7 @@
 FROM centos:7
 
+ENV PATH ${PATH}:/usr/local/bin
+
 RUN yum update -y && yum -y install \
   git \
   curl \
@@ -12,11 +14,8 @@ RUN yum update -y && yum -y install \
   rpm-build \
   rpm-sign \
   autoconf \
-  expect
-
-ENV PATH ${PATH}:/usr/local/bin
-
-RUN curl -o fakeroot-libs.rpm "http://mirror.centos.org/centos/6/os/x86_64/Packages/fakeroot-libs-1.12.2-22.2.el6.x86_64.rpm" \
+  expect \
+  && curl -o fakeroot-libs.rpm "http://mirror.centos.org/centos/6/os/x86_64/Packages/fakeroot-libs-1.12.2-22.2.el6.x86_64.rpm" \
   && curl -o fakeroot.rpm "http://mirror.centos.org/centos/6/os/x86_64/Packages/fakeroot-1.12.2-22.2.el6.x86_64.rpm" \
   && rpm -i fakeroot.rpm fakeroot-libs.rpm \
   && gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
