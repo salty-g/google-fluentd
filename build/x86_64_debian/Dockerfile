@@ -1,6 +1,5 @@
 FROM debian:7
 
-#RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN /bin/bash -l -c "apt-get update -y && apt-get install -y \
         procps \
         git \
