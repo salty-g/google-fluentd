@@ -20,7 +20,22 @@ Dir.chdir(gp.target_dir) {
   gp.target_files.each { |n, v, an|
     path = sprintf(file_format, index, n, v)
     loop {
-      `curl -o #{path} -L http://rubygems.org/downloads/#{n}-#{v}.gem`
+      if v.include?('gem-fetch-')
+        actual_version = v.dup
+        fail if actual_version.slice!('gem-fetch-').nil?
+        output = `gem fetch #{n} --version #{actual_version}`.strip.split(' ')
+        fail 'Unexpected output: #{output}' unless output[0] == 'Downloaded'
+        fail 'Unexpected output: #{output}' unless output.size == 2
+        version_and_platform_string = output[1].dup
+        if version_and_platform_string.slice!("#{n}-").nil?
+          fail "Unexpected gem name: #{output[1]}"
+        end
+        path = sprintf(file_format, index, n, version_and_platform_string)
+        downloaded_gem_path = "#{output[1]}.gem"
+        `mv #{downloaded_gem_path} #{path}`
+      else
+        `curl -o #{path} -L http://rubygems.org/downloads/#{n}-#{v}.gem`
+      end
       `gem install --explain #{path} --no-ri --no-rdoc`
       break if $?.success?
       sleep 1
