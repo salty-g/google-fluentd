@@ -21,11 +21,14 @@ Dir.chdir(gp.target_dir) {
     path = sprintf(file_format, index, n, v)
     loop {
       # Fetch the pre-compiled gem native extensions instead of building them
-      # from source if the version has prefix `gem-fetch`.
+      # from source if the version has prefix `gem-fetch-`.
       if v.start_with?('gem-fetch-')
+        v.slice!('gem-fetch-')
         actual_version = v.dup
-        fail if actual_version.slice!('gem-fetch-').nil?
+        fail if actual_version.nil?
         output = `gem fetch #{n} --version #{actual_version}`.strip.split(' ')
+        # Expected output is in the following format:
+        # "Downloaded grpc-<version>-x86_64-linux"
         fail 'Unexpected output: #{output}' unless output[0] == 'Downloaded'
         fail 'Unexpected output: #{output}' unless output.size == 2
         version_and_platform_string = output[1].dup
