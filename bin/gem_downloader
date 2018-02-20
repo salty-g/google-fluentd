@@ -22,7 +22,7 @@ Dir.chdir(gp.target_dir) {
     loop {
       case approach
       when :fetch
-        # Fetch the pre-compiled gem native extension instead of building them
+        # Fetch the pre-compiled gem native extensions instead of building them
         # from source.
         # Expected output is in the following format:
         # "Downloaded <gem_name>-<gem_version>-<gem_platform>"
@@ -36,7 +36,7 @@ Dir.chdir(gp.target_dir) {
         # Download the native extension code and build from source.
         `curl -o #{path} -L http://rubygems.org/downloads/#{name}-#{version}.gem`
       else
-        fail 'Unsupported gem approach.'
+        fail "Unsupported gem approach: #{approach}."
       end
       `gem install --explain #{path} --no-ri --no-rdoc`
       break if $?.success?
