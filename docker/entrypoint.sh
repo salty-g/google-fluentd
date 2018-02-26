@@ -11,9 +11,9 @@ if [ -n "$METADATA_AGENT_URL" ]; then
     /etc/google-fluentd/google-fluentd.conf
 fi
 
-# This docker image supports sending either a flag, or a command, as the 
-# docker command. When a flag is sent, it will be passed on to the fluentd
-# process. Anything else will be interpreted as a command to be run.
+# This docker image supports sending either a flag or a command as the docker
+# command. When a flag is sent, it will be passed on to the fluentd process. 
+# Anything else will be interpreted as the command to be run.
 #
 # Passing a flag.
 # $ docker run -it {image:tag} -o /var/log/google-fluentd.log
