@@ -1,5 +1,6 @@
 FROM debian:stretch-20180312
 
+# TODO: This may be a moving target, figure out how to pin.
 RUN apt-get update \
     && apt-get install -y \
         curl \
