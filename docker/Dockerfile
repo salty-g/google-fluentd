@@ -7,13 +7,15 @@ RUN apt-get update \
         gnupg2 \
         lsb-release \
         procps \
-        systemd
+        systemd \
+    && rm -rf /var/lib/apt/lists/* /tmp/* \
+    && apt-get autoremove
 
 RUN curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_SUFFIX=20180322-1 DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash \
-    && apt-get autoremove \
-    && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf" \
     && rm -rf /var/lib/apt/lists/* /tmp/* \
-    && find /var/log -name "*.log" -type f -delete
+    && apt-get autoremove \
+    && find /var/log -name "*.log" -type f -delete \
+    && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf"
 
 ADD entrypoint.sh /entrypoint.sh
 
