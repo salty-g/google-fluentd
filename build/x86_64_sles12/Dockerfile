@@ -4,6 +4,7 @@ RUN zypper install -y \
 	autoconf \
 	bzip2 \
 	curl \
+	expect \
 	gcc-c++ \
 	git \
 	patch \
