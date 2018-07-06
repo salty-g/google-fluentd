@@ -1,6 +1,7 @@
 FROM debian:7
 
-RUN apt-get update -y && apt-get install -y \
+RUN apt-get update -y \
+ && apt-get install -y \
         autoconf \
         bzip2 \
         curl \

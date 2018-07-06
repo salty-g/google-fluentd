@@ -1,6 +1,7 @@
 FROM centos:6
 
-RUN yum update -y && yum install -y \
+RUN yum update -y \
+ && yum install -y \
         autoconf \
         bzip2 \
         centos-release-SCL \

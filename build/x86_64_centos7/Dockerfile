@@ -1,6 +1,7 @@
 FROM centos:7
 
-RUN yum update -y && yum -y install \
+RUN yum update -y \
+ && yum install -y \
         autoconf \
         bzip2 \
         curl \
