@@ -21,7 +21,7 @@ RUN curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_S
 
 ENV LD_PRELOAD=/opt/google-fluentd/embedded/lib/libjemalloc.so
 
-ADD entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh Dockerfile VERSION /
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/google-fluentd"]
