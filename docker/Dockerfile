@@ -18,6 +18,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* \
     && apt-get autoremove -y \
     && find /var/log -name "*.log" -type f -delete \
+    && rm -rf /usr/share/doc /usr/share/man /opt/google-fluentd/embedded/share/doc /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/doc \
     && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf"
 
 ENV LD_PRELOAD=/opt/google-fluentd/embedded/lib/libjemalloc.so
