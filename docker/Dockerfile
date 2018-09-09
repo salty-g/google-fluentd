@@ -53,8 +53,25 @@ RUN apt-get update \
         mixlib-log \
         mixlib-shellout \
         systemu \
+        # Gems for AWS.
+        aws-sdk \
+        aws-sdk-core \
+        aws-sdk-resources \
+        aws-sdk-v1 \
+        aws-sigv4 \
+    # Remove Postgres.
+    && rm -rf \
+        /opt/google-fluentd/embedded/bin/pg_* \
+        /opt/google-fluentd/embedded/bin/postgre* \
+        /opt/google-fluentd/embedded/share/postgre* \
+        /opt/google-fluentd/embedded/lib/postgre* \
     # Remove unused api client libraries.
     && cd /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/google-api-client-0.23.4/generated/google/apis && ls -1 /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/google-api-client-0.23.4/generated/google/apis | grep -v 'logging' | xargs rm -rf \
+    # Use Fluentd v0.12.
+    && /opt/google-fluentd/embedded/bin/gem uninstall fluentd -ax --force \
+    && /opt/google-fluentd/embedded/bin/gem install fluentd -v 0.12.41 \
+    && /opt/google-fluentd/embedded/bin/gem uninstall fluent-plugin-systemd -ax --force \
+    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-systemd -v 0.0.9 \
     && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf"
 
 ENV LD_PRELOAD=/opt/google-fluentd/embedded/lib/libjemalloc.so
