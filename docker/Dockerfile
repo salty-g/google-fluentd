@@ -34,8 +34,6 @@ RUN apt-get update \
         /usr/share/doc \
         /usr/share/man \
         /opt/google-fluentd/embedded/share/doc \
-        /opt/google-fluentd/embedded/lib/ruby/gems/*/doc \
-        /opt/google-fluentd/embedded/lib/ruby/*/rdoc \
         /opt/google-fluentd/embedded/share/gtk-doc \
         /opt/google-fluentd/embedded/share/man \
         /opt/google-fluentd/embedded/share/terminfo \
