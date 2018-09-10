@@ -26,9 +26,7 @@ RUN apt-get update \
     && find /var/log -name "*.log" -type f -delete \
     # Remove .a .c .cc .h files and include libraries
     && rm -rf /opt/google-fluentd/embedded/include /opt/google-fluentd/embedded/lib/*.a \
-    && find /opt/google-fluentd/embedded/ -name '*.c'  | xargs rm \
-    && find /opt/google-fluentd/embedded/ -name '*.cc' | xargs rm \
-    && find /opt/google-fluentd/embedded/ -name '*.h'  | xargs rm \
+    && find /opt/google-fluentd/embedded/ -name '*.c' -o -name '*.cc' -o -name '*.h'  | xargs rm \
     # Remove docs.
     && rm -rf \
         /usr/share/doc \
