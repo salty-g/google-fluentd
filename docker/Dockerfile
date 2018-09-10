@@ -26,7 +26,7 @@ RUN apt-get update \
     && find /var/log -name "*.log" -type f -delete \
     # Remove .a .c .cc .h files and include libraries
     && rm -rf /opt/google-fluentd/embedded/include /opt/google-fluentd/embedded/lib/*.a \
-    && find /opt/google-fluentd/embedded/ -name '*.c' -o -name '*.cc' -o -name '*.h'  | xargs rm \
+    && (find /opt/google-fluentd/embedded/ -name '*.c' -o -name '*.cc' -o -name '*.h'  | xargs rm) \
     # Remove docs.
     && rm -rf \
         /usr/share/doc \
@@ -53,7 +53,9 @@ RUN apt-get update \
         mixlib-shellout \
         systemu \
     # Remove unused api client libraries.
-    && cd /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/google-api-client-0.23.4/generated/google/apis && ls -1 /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/google-api-client-0.23.4/generated/google/apis | grep -v 'logging' | xargs rm -rf \
+    && cd /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/google-api-client-0.23.4/generated/google/apis \
+    && (ls -1 /opt/google-fluentd/embedded/lib/ruby/gems/2.4.0/gems/google-api-client-0.23.4/generated/google/apis \
+         | grep -v 'logging' | xargs rm -rf ) \
     && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf"
 
 ENV LD_PRELOAD=/opt/google-fluentd/embedded/lib/libjemalloc.so
