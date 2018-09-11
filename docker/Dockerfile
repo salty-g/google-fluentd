@@ -59,6 +59,13 @@ RUN apt-get update \
         mixlib-log \
         mixlib-shellout \
         systemu \
+    # Remove gems for AWS.
+    && /opt/google-fluentd/embedded/bin/gem uninstall -ax --force \
+        aws-sdk \
+        aws-sdk-core \
+        aws-sdk-resources \
+        aws-sdk-v1 \
+        aws-sigv4 \
     # Remove unused api client libraries.
     && (find /opt/google-fluentd/embedded/lib/ruby/gems/*/gems/google-api-client-*/generated/google/apis -mindepth 1 -maxdepth 1 \! -name 'logging*' | xargs rm -rf) \
     && sed -i "s/num_threads 8/num_threads 8\n  detect_json true\n  # Enable metadata agent lookups.\n  enable_metadata_agent true\n  metadata_agent_url \"http:\/\/local-metadata-agent.stackdriver.com:8000\"/" "/etc/google-fluentd/google-fluentd.conf"
