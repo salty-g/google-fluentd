@@ -66,8 +66,8 @@ RUN apt-get update \
         # LDAP.
         /usr/lib/x86_64-linux-gnu/libldap* \
         # IBM mainframe / EBCDIC specific encodings.
-        /usr/lib/x86_64-linux-gnu/gconv/EBCDIC* \
         /usr/lib/x86_64-linux-gnu/gconv/IBM* \
+        /usr/lib/x86_64-linux-gnu/gconv/EBCDIC* \
         # ecpg.
         /opt/google-fluentd/embedded/bin/ecpg \
         # OpenSSL.
