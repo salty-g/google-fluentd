@@ -13,6 +13,13 @@ RUN apt-get update \
         adduser \
     # Install google-fluentd at version 1.5.35-1.
     && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_SUFFIX=20180810-1 DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash \
+    # Pin Fluentd at v0.12.
+    && /opt/google-fluentd/embedded/bin/gem uninstall -ax --force \
+        fluentd \
+        fluent-plugin-systemd \
+    && /opt/google-fluentd/embedded/bin/gem install \
+        fluentd:0.12.41 \
+        fluent-plugin-systemd:0.0.9 \
     # Clean up to reduce image size.
     && apt-get purge -y \
         curl \
