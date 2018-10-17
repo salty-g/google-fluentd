@@ -1,4 +1,5 @@
 dir 'core_gems'
+download "fluentd", "1.2.5"
 download "bundler", "1.10.6"
 download "json", "2.1.0"
 download "msgpack", "1.2.2"
