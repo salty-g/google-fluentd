@@ -20,10 +20,10 @@ RUN apt-get update \
         adduser \
     # Install Logging Agent.
     && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_SUFFIX="$REPO_SUFFIX" DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash \
-    # Store versions in the VERSION file.
+    # Append versions in the VERSION file.
     && echo REPO_SUFFIX=$REPO_SUFFIX >> /VERSION \
-    && dpkg -s google-fluentd | grep Version | sed 's/Version: /GOOGLE_FLUENTD_VERSION=/g' >> /VERSION \
-    && /opt/google-fluentd/embedded/bin/gem list fluent-plugin-google-cloud | tail -n 1 | sed 's/fluent-plugin-google-cloud (/FLUENT_PLUGIN_GOOGLE_CLOUD_VERSION=/g;s/)//g' >> /VERSION \
+    && dpkg -s google-fluentd | sed -n 's/^Version: /GOOGLE_FLUENTD_VERSION=/p' >> /VERSION \
+    && /opt/google-fluentd/embedded/bin/gem list fluent-plugin-google-cloud | sed 's/^fluent-plugin-google-cloud (\(.*\))$/FLUENT_PLUGIN_GOOGLE_CLOUD_VERSION=\1/' >> /VERSION \
     # If any additional gems need to be installed, it should happen before the
     # image cleanup.
     # ==> INSTALL_ADDITIONAL_GEMS_HERE_IF_NEEDED <==
