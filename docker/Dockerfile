@@ -20,7 +20,7 @@ RUN apt-get update \
         adduser \
     # Install Logging Agent.
     && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_SUFFIX="$REPO_SUFFIX" DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash \
-    # Append versions in the VERSION file.
+    # Append versions to the VERSION file.
     && echo REPO_SUFFIX=$REPO_SUFFIX >> /VERSION \
     && dpkg -s google-fluentd | sed -n 's/^Version: /GOOGLE_FLUENTD_VERSION=/p' >> /VERSION \
     && /opt/google-fluentd/embedded/bin/gem list fluent-plugin-google-cloud | sed 's/^fluent-plugin-google-cloud (\(.*\))$/FLUENT_PLUGIN_GOOGLE_CLOUD_VERSION=\1/' >> /VERSION \
