@@ -1,5 +1,5 @@
 dir 'plugin_gems'
-# The order of these dependencies matter due to how Ruby pulls dependencies.
+# The order of these dependencies matters due to how Ruby pulls dependencies.
 download "httpclient", "2.7.2"
 download "td-client", "1.0.5"
 download "td", "0.15.8"
