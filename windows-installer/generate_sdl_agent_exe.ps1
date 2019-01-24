@@ -22,6 +22,13 @@ if ($version -eq "")
 }
 
 ##############################
+#  TRACING AND ERROR HANDLING
+##############################
+
+Set-PSDebug -Trace 1
+$ErrorActionPreference = 'Stop'
+
+##############################
 #  VARIABLES - DIRECTORIES
 ##############################
 
