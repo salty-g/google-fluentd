@@ -274,7 +274,7 @@ do_restart() {
 }
 
 do_configtest() {
-  eval "${TD_AGENT_ARGS} ${START_STOP_DAEMON_ARGS} --dry-run -q"
+  eval "${TD_AGENT_ARGS} --dry-run -q"
 }
 
 RETVAL=0
