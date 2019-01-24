@@ -45,7 +45,7 @@ $SD_LOGGING_AGENT_DIR_BIN = $SD_LOGGING_AGENT_DIR + "\bin"
 # The ruby dev kit location.  This will add to the ruby install.
 $RUBY_DEV_DIR = $BASE_INSTALLER_DIR + "\rubydevkit"
 
-# The NSIS location.  Used to comiple the Stackdriver Logging Agent installer.
+# The NSIS location.  Used to compile the Stackdriver Logging Agent installer.
 $NSIS_DIR = $BASE_INSTALLER_DIR + "\NSIS"
 
 # The location of the NSIS plugin to unzip files.
