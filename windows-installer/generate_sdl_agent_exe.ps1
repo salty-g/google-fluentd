@@ -171,7 +171,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 # unneeded docs that bloat the file size (and also seem to cause issues with unzipping).
 ###############################
 
-& $GEM_CMD install fluentd:0.14.15 --no-document
+& $GEM_CMD install fluentd:1.4.2 --no-document
 & $GEM_CMD install windows-pr:1.2.5 win32-ipc:0.6.6 win32-event:0.6.3 win32-eventlog:0.6.6 win32-service:0.8.9 fluent-plugin-windows-eventlog:0.2.1 --no-document
 & $GEM_CMD install protobuf:3.6 google-protobuf:3.7.1 grpc:1.20.0 googleapis-common-protos:1.3.4 fluent-plugin-google-cloud:0.7.13 --no-document
 
