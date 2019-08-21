@@ -185,7 +185,7 @@ Section "Install"
   ; Create a directory to store position files.
   CreateDirectory ${MAIN_INSTDIR}\pos
   ; Create a directory to store buffer files.
-  CreateDirectory ${MAIN_INSTDIR}\buffer
+  CreateDirectory ${MAIN_INSTDIR}\buffers
   ; Create a directory for custom configs.
   CreateDirectory "${FLUENTD_CONFIG_DIRECTORY}\${CUSTOM_CONFIG_DIR}"
 
@@ -228,7 +228,7 @@ Section "Install"
     ${WordFind} "$3" "FLUENTD_BUFFER_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
       ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
-      StrCpy $2 "    buffer_path '${MAIN_INSTDIR}\buffer'$\r$\n"
+      StrCpy $2 "    buffer_path '${MAIN_INSTDIR}\buffers'$\r$\n"
     ${EndIf}
 
     ; Look for 'CUSTOM_CONFIG_PLACE_HOLDER', if found replace it with the
