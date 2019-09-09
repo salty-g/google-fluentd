@@ -32,7 +32,7 @@ $ErrorActionPreference = 'Stop'
 #  VARIABLES - DIRECTORIES
 ##############################
 
-# Just install into 'C:' for simplicity.
+# Just install into current directory for simplicity.
 $BASE_INSTALLER_DIR = [string](Get-Location)
 
 # The path of where ruby and all gems will be.  This is the portion that will be
