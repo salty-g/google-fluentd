@@ -6,7 +6,8 @@ FROM debian:9.9-slim
 ARG REPO_SUFFIX=20190829-1
 
 COPY entrypoint.sh Dockerfile /
-COPY fluent-plugin-kubernetes_metadata_filter-2.3.0.gem /
+COPY fluent-plugin-kubernetes_metadata_filter-2.3.1.gem /
+COPY kubeclient-4.4.1.gem /
 
 # TODO: This may be a moving target, figure out how to pin.
 RUN apt-get update \
@@ -30,8 +31,10 @@ RUN apt-get update \
     # If any additional gems need to be installed, it should happen before the
     # image cleanup.
     # ==> INSTALL_ADDITIONAL_GEMS_HERE_IF_NEEDED <==
-    && /opt/google-fluentd/embedded/bin/gem uninstall -ax --force \
-    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-kubernetes_metadata_filter-2.3.0.gem \
+    && /opt/google-fluentd/embedded/bin/gem uninstall -ax --force kubeclient \
+    && /opt/google-fluentd/embedded/bin/gem install kubeclient-4.4.1.gem \
+    && /opt/google-fluentd/embedded/bin/gem uninstall -ax --force fluent-plugin-kubernetes_metadata_filter \
+    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-kubernetes_metadata_filter-2.3.1.gem \
     # Clean up to reduce image size.
     && apt-get purge -y \
         curl \
