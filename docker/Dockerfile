@@ -6,6 +6,7 @@ FROM debian:9.9-slim
 ARG REPO_SUFFIX=20190829-1
 
 COPY entrypoint.sh Dockerfile /
+COPY fluent-plugin-kubernetes_metadata_filter-2.3.0.gem /
 
 # TODO: This may be a moving target, figure out how to pin.
 RUN apt-get update \
@@ -18,6 +19,8 @@ RUN apt-get update \
         systemd \
         ca-certificates \
         adduser \
+	libicu-dev \
+	cmake \
     # Install Logging Agent.
     && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_SUFFIX="$REPO_SUFFIX" DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash \
     # Store versions in the VERSION file.
@@ -27,6 +30,8 @@ RUN apt-get update \
     # If any additional gems need to be installed, it should happen before the
     # image cleanup.
     # ==> INSTALL_ADDITIONAL_GEMS_HERE_IF_NEEDED <==
+    && /opt/google-fluentd/embedded/bin/gem uninstall -ax --force \
+    && /opt/google-fluentd/embedded/bin/gem install fluent-plugin-kubernetes_metadata_filter-2.3.0.gem \
     # Clean up to reduce image size.
     && apt-get purge -y \
         curl \
