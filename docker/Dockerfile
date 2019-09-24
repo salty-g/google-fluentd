@@ -6,7 +6,9 @@ FROM debian:9.9-slim
 ARG REPO_SUFFIX=20190829-1
 
 COPY entrypoint.sh Dockerfile /
+# From https://github.com/jkohen/fluent-plugin-kubernetes_metadata_filter/tree/cache
 COPY fluent-plugin-kubernetes_metadata_filter-2.3.1.gem /
+# From https://github.com/jkohen/kubeclient/tree/patch-1
 COPY kubeclient-4.4.1.gem /
 
 # TODO: This may be a moving target, figure out how to pin.
