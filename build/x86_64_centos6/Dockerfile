@@ -11,7 +11,6 @@ RUN yum -y update \
         git \
         glibc-devel \
         patch \
-        procps \
         redhat-lsb-core \
         rpm-build \
         rpm-sign \
