@@ -139,7 +139,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 #
 # These are all a known set of versions which work together. Be sure things work if you
 # update any of them.
-x###############################
+###############################
 
 & $RUBY_EXE $PSScriptRoot\..\bin\gem_downloader plugin_gems.rb
 
