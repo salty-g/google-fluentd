@@ -113,18 +113,10 @@ mkdir $NSIS_UNZU_DIR
 $ProgressPreference = "silentlyContinue"
 # Handle SSL correctly.
 [Net.ServicePointManager]::SecurityProtocol = 'TLS12'
-
-# Need help with Chocolatey? See https://chocolatey.org/install
-Set-ExecutionPolicy Bypass -Scope Process -Force
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-# Add Chocolatey to this session's path.
-$env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
-
-choco install -y curl
-
-curl.exe -L "$RUBY_INSTALLER_LINK" -o "$RUBY_INSTALLER"
-curl.exe -L "$NSIS_INSTALLER_LINK" -o "$NSIS_INSTALLER"
-curl.exe -L "$NSIS_UNZU_INSTALLER_LINK" -o "$NSIS_UNZU_ZIP"
+# Pretend to be curl for Sourceforge redirects to work.
+Invoke-WebRequest "$RUBY_INSTALLER_LINK" -OutFile "$RUBY_INSTALLER" -UserAgent "curl/7.60.0"
+Invoke-WebRequest "$NSIS_INSTALLER_LINK" -OutFile "$NSIS_INSTALLER" -UserAgent "curl/7.60.0"
+Invoke-WebRequest "$NSIS_UNZU_INSTALLER_LINK" -OutFile "$NSIS_UNZU_ZIP" -UserAgent "curl/7.60.0"
 
 
 ##############################
@@ -156,6 +148,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 $gem_installer = $SRC_ROOT + '\bin\gem_installer'
 $core_gems_rb = $SRC_ROOT + '\core_gems.rb'
 $plugin_gems_rb = $SRC_ROOT + '\plugin_gems.rb'
+& $GEM_CMD install fluentd:1.4.2 --no-document
 & $RUBY_EXE $gem_installer $core_gems_rb
 & $RUBY_EXE $gem_installer $plugin_gems_rb
 
@@ -187,8 +180,8 @@ rm -r -Force $RUBY_DEV_DIR
 #  STEP 6 - ZIP THE FILES.
 ##############################
 
-Add-Type -Assembly System.IO.Compression.FileSystem
 rm -Force $STACKDRIVER_ZIP -ErrorAction Ignore
+Add-Type -Assembly System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::CreateFromDirectory($SD_LOGGING_AGENT_DIR, $STACKDRIVER_ZIP)
 
 
