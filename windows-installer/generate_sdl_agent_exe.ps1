@@ -115,15 +115,13 @@ $ProgressPreference = "silentlyContinue"
 # Need help with Chocolatey? See https://chocolatey.org/install
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 # Add Chocolatey to this session's path.
-if ($($env:Path).ToLower().Contains($($chocoExePath).ToLower()) -eq $false) {
-  $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
-}
+$env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
 
 choco install -y curl
 
-curl -L "$RUBY_INSTALLER_LINK" -o "$RUBY_INSTALLER"
-curl -L "$NSIS_INSTALLER_LINK" -o "$NSIS_INSTALLER"
-curl -L "$NSIS_UNZU_INSTALLER_LINK" -o "$NSIS_UNZU_ZIP"
+curl.exe -L "$RUBY_INSTALLER_LINK" -o "$RUBY_INSTALLER"
+curl.exe -L "$NSIS_INSTALLER_LINK" -o "$NSIS_INSTALLER"
+curl.exe -L "$NSIS_UNZU_INSTALLER_LINK" -o "$NSIS_UNZU_ZIP"
 
 
 ##############################
