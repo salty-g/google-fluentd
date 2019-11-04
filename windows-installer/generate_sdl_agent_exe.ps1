@@ -72,7 +72,7 @@ $NSIS_UNZU_INSTALLER_LINK = "http://nsis.sourceforge.net/mediawiki/images/5/5a/N
 #  VARIABLES - FILE LOCATIONS
 ##############################
 
-$SRC_ROOT = $PSScriptRoot\..
+$SRC_ROOT = $PSScriptRoot + "\.."
 
 # The location of the ruby executable, used to set up the ruby dev kit.
 $RUBY_EXE = $SD_LOGGING_AGENT_DIR + "\bin\ruby.exe"
@@ -143,7 +143,9 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 # update any of them.
 ###############################
 
-& $RUBY_EXE $SRC_ROOT\bin\gem_downloader $SRC_ROOT\plugin_gems.rb
+$gem_downloader = $SRC_ROOT + '\bin\gem_downloader'
+$plugin_gems_rb = $SRC_ROOT + '\plugin_gems.rb'
+& $RUBY_EXE $gem_downloader $plugin_gems_rb
 
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
