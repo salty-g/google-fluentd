@@ -135,18 +135,13 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 #  STEP 4 - INSTALL THE GEMS
 ##############################
 #
-# Install the needed gems for google fleuntd to works.
+# Install the needed gems for google fluentd to works.
 #
 # These are all a known set of versions which work together. Be sure things work if you
 # update any of them.
-#
-# We install all gems with '--no-document' so we don't pull in
-# unneeded docs that bloat the file size (and also seem to cause issues with unzipping).
-###############################
+x###############################
 
-& $GEM_CMD install fluentd:1.4.2 --no-document
-& $GEM_CMD install windows-pr:1.2.6 win32-ipc:0.7.0 win32-event:0.6.3 win32-eventlog:0.6.7 win32-service:2.1.4 fluent-plugin-windows-eventlog:0.2.2 --no-document
-& $GEM_CMD install google-protobuf:3.7.1 grpc:1.20.0 fluent-plugin-google-cloud:0.7.23 --no-document
+& $RUBY_EXE $PSScriptRoot\..\bin\gem_downloader plugin_gems.rb
 
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
@@ -199,3 +194,5 @@ cp $NSIS_UNZU_DLL $NSIS_UNICODE_PLUGIN_DIR
 ##############################
 
 & $NSIS_MAKE /DVERSION=$version $STACKDRIVER_NSI
+
+Set-PSDebug -Trace 0
