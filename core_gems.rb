@@ -11,10 +11,13 @@ download "tzinfo", "1.2.2"
 download "tzinfo-data", "1.2016.5"
 if windows?
   download "google-protobuf", "3.9.0"
-  download "grpc", "1.24.0"
 else
   # TODO: verify whether this works as `download` with the Linux installer, and
   # collapse the if.
   fetch "google-protobuf", "3.9.0"
+end
+unless windows?
+  # grpc currently fails to build on Windows, but it gets installed correctly
+  # when another gem pulls it in.
   fetch "grpc", "1.24.0"
 end
