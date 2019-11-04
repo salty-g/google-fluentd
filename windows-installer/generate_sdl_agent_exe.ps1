@@ -186,6 +186,7 @@ rm -r -Force $RUBY_DEV_DIR
 ##############################
 
 Add-Type -Assembly System.IO.Compression.FileSystem
+rm -Force $STACKDRIVER_ZIP
 [System.IO.Compression.ZipFile]::CreateFromDirectory($SD_LOGGING_AGENT_DIR, $STACKDRIVER_ZIP)
 
 
