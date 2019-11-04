@@ -10,8 +10,7 @@ download "oj", "3.3.10"
 download "tzinfo", "1.2.2"
 download "tzinfo-data", "1.2016.5"
 unless windows?
-  # TODO: verify whether this works as `download` with the Linux installer, and
-  # collapse the if.
+  # Build dependencies for 'google-fluentd' that aren't needed on Windows.
   fetch "google-protobuf", "3.9.0"
   fetch "grpc", "1.24.0"
 end
