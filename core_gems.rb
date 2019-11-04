@@ -9,5 +9,12 @@ download "thread_safe", "0.3.5"
 download "oj", "3.3.10"
 download "tzinfo", "1.2.2"
 download "tzinfo-data", "1.2016.5"
-fetch "google-protobuf", "3.7.1"
-fetch "grpc", "1.20.0"
+if windows?
+  download "google-protobuf", "3.9.0"
+  download "grpc", "1.24.0"
+else
+  # TODO: verify whether this works as `download` with the Linux installer, and
+  # collapse the if.
+  fetch "google-protobuf", "3.9.0"
+  fetch "grpc", "1.24.0"
+end

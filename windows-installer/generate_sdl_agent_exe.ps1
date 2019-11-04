@@ -113,7 +113,8 @@ $ProgressPreference = "silentlyContinue"
 [Net.ServicePointManager]::SecurityProtocol = 'TLS12'
 
 # Need help with Chocolatey? See https://chocolatey.org/install
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 # Add Chocolatey to this session's path.
 $env:Path = [Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::Machine);
 
@@ -144,7 +145,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 #  STEP 4 - INSTALL THE GEMS
 ##############################
 #
-# Install the needed gems for google fluentd to works.
+# Install the needed gems for google fluentd to work.
 #
 # These are all a known set of versions which work together. Be sure things work if you
 # update any of them.
