@@ -99,9 +99,9 @@ $STACKDRIVER_NSI = $PSScriptRoot + "\setup.nsi"
 #  STEP 1 - CREATE THE NEEDED DIRECTORIES.
 ##############################
 
-rm -r -Force $SD_LOGGING_AGENT_DIR
+rm -r -Force $SD_LOGGING_AGENT_DIR -ErrorAction Ignore
 mkdir $SD_LOGGING_AGENT_DIR
-rm -r -Force $NSIS_UNZU_DIR
+rm -r -Force $NSIS_UNZU_DIR -ErrorAction Ignore
 mkdir $NSIS_UNZU_DIR
 
 
@@ -188,7 +188,7 @@ rm -r -Force $RUBY_DEV_DIR
 ##############################
 
 Add-Type -Assembly System.IO.Compression.FileSystem
-rm -Force $STACKDRIVER_ZIP
+rm -Force $STACKDRIVER_ZIP -ErrorAction Ignore
 [System.IO.Compression.ZipFile]::CreateFromDirectory($SD_LOGGING_AGENT_DIR, $STACKDRIVER_ZIP)
 
 
