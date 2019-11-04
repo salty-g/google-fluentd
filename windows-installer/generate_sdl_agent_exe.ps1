@@ -143,9 +143,9 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 # update any of them.
 ###############################
 
-$gem_downloader = $SRC_ROOT + '\bin\gem_downloader'
+$gem_installer = $SRC_ROOT + '\bin\gem_installer'
 $plugin_gems_rb = $SRC_ROOT + '\plugin_gems.rb'
-& $RUBY_EXE $gem_downloader $plugin_gems_rb
+& $RUBY_EXE $gem_installer $plugin_gems_rb
 
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
