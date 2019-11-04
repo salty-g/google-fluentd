@@ -99,8 +99,10 @@ $STACKDRIVER_NSI = $PSScriptRoot + "\setup.nsi"
 #  STEP 1 - CREATE THE NEEDED DIRECTORIES.
 ##############################
 
-New-Item -Path $SD_LOGGING_AGENT_DIR -ItemType "directory" -Force
-New-Item -Path $NSIS_UNZU_DIR -ItemType "directory" -Force
+rm -r -Force $SD_LOGGING_AGENT_DIR
+mkdir $SD_LOGGING_AGENT_DIR
+rm -r -Force $NSIS_UNZU_DIR
+mkdir $NSIS_UNZU_DIR
 
 
 ##############################
