@@ -143,6 +143,9 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 #
 # These are all a known set of versions which work together. Be sure things work if you
 # update any of them.
+#
+# We install all gems with '--no-document' so we don't pull in
+# unneeded docs that bloat the file size (and also seem to cause issues with unzipping).
 ###############################
 
 $gem_installer = $SRC_ROOT + '\bin\gem_installer'
