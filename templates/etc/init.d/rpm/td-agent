@@ -210,7 +210,7 @@ do_start() {
   fi
 
   local RETVAL=0
-  daemon --pidfile="${TD_AGENT_PID_FILE}" ${START_STOP_DAEMON_ARGS} "${TD_AGENT_RUBY}" ${TD_AGENT_ARGS} \& echo \$! \> "${TD_AGENT_PID_FILE}"
+  daemon --pidfile="${TD_AGENT_PID_FILE}" ${START_STOP_DAEMON_ARGS} "${TD_AGENT_RUBY}" ${TD_AGENT_ARGS} \& echo \$! \> "${TD_AGENT_PID_FILE}" || RETVAL="$?"
   [ $RETVAL -eq 0 ] && touch "${TD_AGENT_LOCK_FILE}"
   return $RETVAL
 }
