@@ -35,6 +35,7 @@ RUN apt-get -y update \
         autoconf \
         bzip2 \
         curl \
+        fakeroot \
         git \
         g++ \
         make \
