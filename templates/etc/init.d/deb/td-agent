@@ -184,9 +184,6 @@ do_reload() {
 }
 
 do_restart() {
-  if ! do_configtest; then
-    return 1
-  fi
   local val=0
   do_stop || val="$?"
   case "${val}" in
