@@ -28,7 +28,7 @@ license_file "LEGAL"
 # - Note: When updating major version (i.e. 2.2 -> 2.3), gem_dir_version must be
 #   updated to 2.X.0 in td.rb, td-agent-cleanup.rb, td-agent-files.rb, and
 #   td-agent-ui.rb.
-default_version "2.6.5"
+default_version "2.7.0"
 
 fips_enabled = (project.overrides[:fips] && project.overrides[:fips][:enabled]) || false
 
