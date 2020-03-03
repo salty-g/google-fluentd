@@ -208,7 +208,8 @@ do_start() {
   fi
 
   local RETVAL=0
-  start_daemon -p "${TD_AGENT_PID_FILE}" ${START_STOP_DAEMON_ARGS} "${TD_AGENT_RUBY}" ${TD_AGENT_ARGS} --no-supervisor || RETVAL="$?"
+  start_daemon -p "${TD_AGENT_PID_FILE}" ${START_STOP_DAEMON_ARGS} /bin/bash -c \
+    "'${TD_AGENT_RUBY}' ${TD_AGENT_ARGS} --no-supervisor & sleep 0 && kill -0 \$! && echo \$! > '${TD_AGENT_PID_FILE}' || wait \$!" || RETVAL="$?"
   [ $RETVAL -eq 0 ] && touch "${TD_AGENT_LOCK_FILE}"
   return $RETVAL
 }
