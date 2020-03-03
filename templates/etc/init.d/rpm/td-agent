@@ -154,7 +154,7 @@ if [ -n "${TD_AGENT_GROUP}" ]; then
     echo "$0: group for running ${TD_AGENT_NAME} doesn't exist: ${TD_AGENT_GROUP}" >&2
     exit 1
   fi
-  START_STOP_DAEMON_ARGS="${START_STOP_DAEMON_ARGS} -g ${TD_AGENT_GROUP}"
+  TD_AGENT_ARGS="${TD_AGENT_ARGS} --group ${TD_AGENT_GROUP}"
 fi
 
 if [ -n "${TD_AGENT_PID_FILE}" ]; then
