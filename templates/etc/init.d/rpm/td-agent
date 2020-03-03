@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ### BEGIN INIT INFO
 # Provides:          <%= project_name %>
 # Required-Start:    $network $local_fs
@@ -134,6 +134,28 @@ START_STOP_DAEMON_ARGS="${START_STOP_DAEMON_ARGS}"
 [ -x "${TD_AGENT_RUBY}" ] || exit 0
 
 # Source function library.
+if [ -f <%= File.join(root_path, "etc/init.d/functions") %> ]; then
+  . <%= File.join(root_path, "etc/init.d/functions") %>
+else
+  daemon () {
+    local -a start_daemon_args
+    while [ "$1" != "${1#[-+]}" ]; do
+      case $1 in
+        --force) start_daemon_args+=(-f); shift;;
+        --pidfile) start_daemon_args+=(-p "$2"); shift 2;;
+        --pidfile=*) start_daemon_args+=(-p "${1#*=}"); shift;;
+        --user) start_daemon_args+=(-u "$2"); shift 2;;
+        --user=*) start_daemon_args+=(-u "${1#*=}"); shift;;
+        --check) start_daemon_args+=(-c "$2"); shift 2;;
+        --check=*) start_daemon_args+=(-c "${1#*=}"); shift;;
+        [-+][0-9]*) start_daemon_args+=(-n "$1"); shift;;
+        *) return 1;;
+      esac
+    done
+    start_daemon "${start_daemon_args[@]}" /bin/bash -c "$@"
+  }
+fi
+
 # Define LSB log_* functions.
 # Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
 . <%= Shellwords.shellescape(File.join(root_path, "lib/lsb/init-functions")) %>
@@ -146,7 +168,7 @@ if [ -n "${TD_AGENT_USER}" ]; then
   fi
   mkdir -p "$(dirname "${TD_AGENT_PID_FILE}")"
   chown -R "${TD_AGENT_USER}" "$(dirname "${TD_AGENT_PID_FILE}")"
-  START_STOP_DAEMON_ARGS="${START_STOP_DAEMON_ARGS} -u ${TD_AGENT_USER}"
+  START_STOP_DAEMON_ARGS="${START_STOP_DAEMON_ARGS} --user ${TD_AGENT_USER}"
 fi
 
 if [ -n "${TD_AGENT_GROUP}" ]; then
@@ -208,8 +230,8 @@ do_start() {
   fi
 
   local RETVAL=0
-  start_daemon -p "${TD_AGENT_PID_FILE}" ${START_STOP_DAEMON_ARGS} /bin/bash -c \
-    "'${TD_AGENT_RUBY}' ${TD_AGENT_ARGS} --no-supervisor & sleep 0 && kill -0 \$! && echo \$! > '${TD_AGENT_PID_FILE}' || wait \$!" || RETVAL="$?"
+  daemon --pidfile="${TD_AGENT_PID_FILE}" ${START_STOP_DAEMON_ARGS} \
+    "${TD_AGENT_RUBY} ${TD_AGENT_ARGS} --no-supervisor & sleep 0 && kill -0 \$! && echo \$! > ${TD_AGENT_PID_FILE} || wait \$!" || RETVAL="$?"
   [ $RETVAL -eq 0 ] && touch "${TD_AGENT_LOCK_FILE}"
   return $RETVAL
 }
