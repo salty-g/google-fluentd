@@ -84,6 +84,6 @@ if [ "$1" = "2" ]; then
 fi
 
 <% if use_systemd -%>
-  systemctl daemon-reload
+systemctl daemon-reload
 <% end -%>
 
