@@ -16,7 +16,7 @@ build do
     project_name_snake = project.name.gsub('-', '_') # for variable names in ERB
     gem_dir_version = "2.6.0"
     puts "mememe ohai[os]"
-    puts "ohai["os"]"
+    puts ohai["os"]
     use_systemd = ohai["os"] == "suse"
     puts use_systemd
     puts ohai["os"] == "suse"
