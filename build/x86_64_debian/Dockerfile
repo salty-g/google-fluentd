@@ -5,8 +5,6 @@ RUN apt-get -y update \
  && apt-get -y install linux-libc-dev gnupg2 \
  # Needed for rvm.
  && apt-get -y install procps \
- # Clean up all the downloaded packages.
- && rm -f *.deb \
  # Now install the necessary packages.
  && apt-get -y install \
         autoconf \
