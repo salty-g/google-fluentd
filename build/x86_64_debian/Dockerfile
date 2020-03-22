@@ -1,15 +1,15 @@
 FROM debian:9
 
 RUN apt-get -y update \
- # Needed for the gpg2 command below.
- && apt-get -y install linux-libc-dev gnupg2 \
- # Needed for rvm.
- && apt-get -y install procps \
- # Now install the necessary packages.
  && apt-get -y install \
+        # Needed for gpg2 and rvm installation.
+        curl \
+        linux-libc-dev \
+        gnupg2 \
+        procps \
+        # Needed for agent build.
         autoconf \
         bzip2 \
-        curl \
         fakeroot \
         git \
         g++ \
