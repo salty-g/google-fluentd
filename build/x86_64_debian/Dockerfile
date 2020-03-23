@@ -4,8 +4,8 @@ RUN apt-get -y update \
  && apt-get -y install \
         # Needed for gpg2 and rvm installation.
         curl \
-        linux-libc-dev \
         gnupg2 \
+        linux-libc-dev \
         procps \
         # Needed for agent build.
         autoconf \
