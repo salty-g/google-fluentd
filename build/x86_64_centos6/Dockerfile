@@ -10,6 +10,7 @@ RUN yum -y update \
         centos-release-SCL \
         expect \
         gcc-c++ \
+        git \
         glibc-devel \
         patch \
         redhat-lsb-core \
@@ -19,7 +20,6 @@ RUN yum -y update \
         which \
         zlib-devel \
  && rpm -ivh http://ftp.tu-chemnitz.de/pub/linux/dag/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm \
- && yum --enablerepo=rpmforge-extras install -y git \
  # RVM GPG keys.
  && mkdir -p ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
  && gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB \
