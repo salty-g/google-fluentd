@@ -28,7 +28,7 @@ license_file "LEGAL"
 # - Note: When updating major version (i.e. 2.2 -> 2.3), gem_dir_version must be
 #   updated to 2.X.0 in td.rb, td-agent-cleanup.rb, td-agent-files.rb, and
 #   td-agent-ui.rb.
-default_version "2.6.5"
+default_version "2.7.0"
 
 fips_enabled = (project.overrides[:fips] && project.overrides[:fips][:enabled]) || false
 
@@ -56,6 +56,7 @@ dependency "libyaml"
 dependency "libiconv"
 
 # The checksums below are for the *.tar.gz packages.
+version("2.7.0")      { source sha256: "8c99aa93b5e2f1bc8437d1bbbefd27b13e7694025331f77245d0c068ef1f8cbe" }
 version("2.6.5")      { source sha256: "66976b716ecc1fd34f9b7c3c2b07bbd37631815377a2e3e85a5b194cfdcbed7d" }
 version("2.6.4")      { source sha256: "4fc1d8ba75505b3797020a6ffc85a8bcff6adc4dabae343b6572bf281ee17937" }
 version("2.6.3")      { source sha256: "577fd3795f22b8d91c1d4e6733637b0394d4082db659fccf224c774a2b1c82fb" }
