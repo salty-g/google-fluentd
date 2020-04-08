@@ -16,7 +16,7 @@ dependency "preparation"
 
 override :ruby, :version => '2.7.0'
 override :zlib, :version => '1.2.8'
-override :rubygems, :version => '3.0.0'
+override :rubygems, :version => '3.1.2'
 override :postgresql, :version => '9.3.5'
 
 # td-agent dependencies/components
