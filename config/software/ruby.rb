@@ -55,6 +55,9 @@ dependency "libyaml"
 # and that's the only one we will ever use.
 dependency "libiconv"
 
+# This lib blocks package building at health check so add to whitelist
+whitelist_lib "libanl\.so\.1"
+
 # The checksums below are for the *.tar.gz packages.
 version("2.7.0")      { source sha256: "8c99aa93b5e2f1bc8437d1bbbefd27b13e7694025331f77245d0c068ef1f8cbe" }
 version("2.6.5")      { source sha256: "66976b716ecc1fd34f9b7c3c2b07bbd37631815377a2e3e85a5b194cfdcbed7d" }
