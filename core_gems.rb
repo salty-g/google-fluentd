@@ -11,6 +11,6 @@ download "tzinfo", "1.2.2"
 download "tzinfo-data", "1.2016.5"
 unless windows?
   # Gems that don't need to be fetched explicitly on Windows.
-  fetch "google-protobuf", "3.7.1"
+  fetch "google-protobuf", "3.12.0.rc.1"
   fetch "grpc", "1.28.0"
 end
