@@ -226,7 +226,7 @@ Section "Install"
     ${WordFind} "$3" "BUFFER_PATH_PLACE_HOLDER" "#" $4
     ${If} $4 == "1"
       ; Replace the whole line instead of using "StrRep" to avoid unicode issues.
-      StrCpy $2 "    path '${BUFFER_FILE_DIRECTORY}'$\r$\n"
+      StrCpy $2 "  buffer_path '${BUFFER_FILE_DIRECTORY}'$\r$\n"
     ${EndIf}
 
     ; Look for 'WIN_EVT_POS_FILE_PLACE_HOLDER', if found replace it with the
