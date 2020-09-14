@@ -83,7 +83,7 @@ echo "$1 this is argument for post" >> /tmp/sophie.log
 
 # 2011/03/24 Kazuki Ohta <k@treasure-data.com>
 # When upgrade, restart agent if it's launched
-if [ "$1" -eq 2 ]; then
+if [ "$1" = "2" ]; then
   echo "Upgrading google-fluentd"
   /sbin/service <%= project_name %> status
   /sbin/service <%= project_name %> condrestart || :
