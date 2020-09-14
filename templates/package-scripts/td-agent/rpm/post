@@ -79,6 +79,8 @@ echo "Configure <%= project_name %> to start, when booting up the OS..."
 
 echo "$1"
 
+echo "$1 this is argument for post" >> /tmp/sophie.log
+
 # 2011/03/24 Kazuki Ohta <k@treasure-data.com>
 # When upgrade, restart agent if it's launched
 if [ "$1" -eq 2 ]; then
