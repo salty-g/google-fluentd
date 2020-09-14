@@ -85,7 +85,9 @@ echo "$1 this is argument for post" >> /tmp/sophie.log
 # When upgrade, restart agent if it's launched
 if [ "$1" -eq 2 ]; then
   echo "Upgrading google-fluentd"
-  /sbin/service <%= project_name %> condrestart >/dev/null 2>&1 || :
+  /sbin/service <%= project_name %> status
+  /sbin/service <%= project_name %> condrestart || :
+  /sbin/service <%= project_name %> status
 fi
 
 <% if use_systemd %>
