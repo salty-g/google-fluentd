@@ -5,7 +5,7 @@
 #   echo "Uninstalling /etc/prelink.conf.d/<%= project_name %>-ruby.conf ..."
 #   rm -f /etc/prelink.conf.d/<%= project_name %>-ruby.conf
 # fi
-if [ $1 = 0 ] ; then
+if [ "$1" = "0" ] ; then
   echo "Stopping <%= project_name %> ..."
   /sbin/service <%= project_name %> stop >/dev/null 2>&1 || :
   /sbin/chkconfig --del <%= project_name %>
