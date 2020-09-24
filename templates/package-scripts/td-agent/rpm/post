@@ -1,3 +1,4 @@
+set -x
 <%= project_name_snake %>_dir=/opt/<%= project_name %>
 
 echo "adding '<%= project_name %>' group..."
