@@ -1,3 +1,4 @@
+set -x
 # 2011/02/21 Kazuki Ohta <k@treasure-data.com>
 # Just leave this file, because this line could delete td-agent.conf in a
 # *UPGRADE* process :-(
