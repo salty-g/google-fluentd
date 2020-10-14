@@ -175,7 +175,7 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 ##############################
 #  STEP 5 - REMOVE UNNECESSARY FILES.
 ##############################
-
+ls $RUBY_DEV_DIR
 rm -r -Force $RUBY_DEV_DIR
 
 
