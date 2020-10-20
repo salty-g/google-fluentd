@@ -178,8 +178,9 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 ls $RUBY_DEV_DIR
 $RUBY_32_DIR = $RUBY_DEV_DIR + "\mingw32\bin"
 ls $RUBY_32_DIR
-$RUBY_64_DIR = $RUBY_DEV_DIR + "\mingw64\bin"
-ls $RUBY_64_DIR
+$LIBSTDC = $RUBY_32_DIR + "\libstdc++-6.dll"
+$BIN = $SD_LOGGING_AGENT_DIR + "\bin"
+cp $LIBSTDC $BIN
 rm -r -Force $RUBY_DEV_DIR
 
 
