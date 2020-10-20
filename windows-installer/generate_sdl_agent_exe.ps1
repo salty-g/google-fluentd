@@ -176,10 +176,8 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 #  STEP 5 - REMOVE UNNECESSARY FILES.
 ##############################
 ls $RUBY_DEV_DIR
-ls 'C:\msys32\'
-ls 'C:\msys32\mingw32\bin'
-ls 'C:\msys64\'
-ls 'C:\msys64\mingw32\bin'
+ls $RUBY_DEV_DIR + '\mingw32\bin'
+ls $RUBY_DEV_DIR + '\mingw64\bin'
 rm -r -Force $RUBY_DEV_DIR
 
 
