@@ -32,6 +32,5 @@ if windows?
   download "win32-event", "0.6.3"
   download "win32-eventlog", "0.6.7"
   download "win32-service", "2.1.4"
-  download "fluent-plugin-windows-eventlog", "0.7.0"
-  download "winevt_c", "0.9.0"
+  download "fluent-plugin-windows-eventlog", "0.8.0"
 end
