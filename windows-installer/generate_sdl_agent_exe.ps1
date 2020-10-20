@@ -25,7 +25,7 @@ if ($version -eq "")
 #  TRACING AND ERROR HANDLING
 ##############################
 
-Set-PSDebug -Trace 1
+Set-PSDebug -Trace 2
 $ErrorActionPreference = 'Stop'
 
 ##############################
@@ -176,6 +176,10 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 #  STEP 5 - REMOVE UNNECESSARY FILES.
 ##############################
 ls $RUBY_DEV_DIR
+ls 'C:\msys32\'
+ls 'C:\msys32\mingw32\bin'
+ls 'C:\msys64\'
+ls 'C:\msys64\mingw32\bin'
 rm -r -Force $RUBY_DEV_DIR
 
 
