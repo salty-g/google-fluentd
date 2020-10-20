@@ -33,4 +33,5 @@ if windows?
   download "win32-eventlog", "0.6.7"
   download "win32-service", "2.1.5"
   download "fluent-plugin-windows-eventlog", "0.8.0"
+  download "nokogiri", "1.10.10"
 end
