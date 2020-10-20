@@ -175,7 +175,11 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 ##############################
 #  STEP 5 - REMOVE UNNECESSARY FILES.
 ##############################
-
+# Below dll is required to put in staging_bindir to run C++ based extension
+# included gem such as winevt_c.
+$LIBSTDCPP = $RUBY_DEV_DIR + "\mingw32\bin\libstdc++-6.dll"
+$BIN = $SD_LOGGING_AGENT_DIR + "\bin"
+cp $LIBSTDCPP $BIN
 rm -r -Force $RUBY_DEV_DIR
 
 
