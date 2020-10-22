@@ -173,13 +173,19 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 
 
 ##############################
+#  STEP 4.2 - COPY NECESSARY DLL FILES.
+##############################
+# Save the C++ runtime DLL to allow running gems with C++ native extensions
+# included gem such as winevt_c.
+$libstd_cpp_dll = $RUBY_DEV_DIR + "\mingw32\bin\libstdc++-6.dll"
+cp $libstd_cpp_dll $SD_LOGGING_AGENT_DIR\bin
+
+
+##############################
 #  STEP 5 - REMOVE UNNECESSARY FILES.
 ##############################
-# Below dll is required to put in staging_bindir to run C++ based extension
+# Save the C++ runtime DLL to allow running gems with C++ native extensions
 # included gem such as winevt_c.
-$LIBSTDCPP = $RUBY_DEV_DIR + "\mingw32\bin\libstdc++-6.dll"
-$BIN = $SD_LOGGING_AGENT_DIR + "\bin"
-cp $LIBSTDCPP $BIN
 rm -r -Force $RUBY_DEV_DIR
 
 
