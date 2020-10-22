@@ -184,8 +184,6 @@ cp $libstd_cpp_dll $SD_LOGGING_AGENT_DIR\bin
 ##############################
 #  STEP 5 - REMOVE UNNECESSARY FILES.
 ##############################
-# Save the C++ runtime DLL to allow running gems with C++ native extensions
-# included gem such as winevt_c.
 rm -r -Force $RUBY_DEV_DIR
 
 
