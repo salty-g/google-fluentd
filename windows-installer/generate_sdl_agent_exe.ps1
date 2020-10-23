@@ -173,7 +173,7 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 
 
 ##############################
-#  STEP 4.2 - COPY NECESSARY DLL FILES.
+#  STEP 5 - COPY NECESSARY DLL FILES.
 ##############################
 # Save the C++ runtime DLL to allow running gems with C++ native extensions
 # included gem such as winevt_c.
@@ -182,13 +182,13 @@ cp $libstd_cpp_dll $SD_LOGGING_AGENT_DIR\bin
 
 
 ##############################
-#  STEP 5 - REMOVE UNNECESSARY FILES.
+#  STEP 6 - REMOVE UNNECESSARY FILES.
 ##############################
 rm -r -Force $RUBY_DEV_DIR
 
 
 ##############################
-#  STEP 6 - ZIP THE FILES.
+#  STEP 7 - ZIP THE FILES.
 ##############################
 
 rm -Force $STACKDRIVER_ZIP -ErrorAction Ignore
@@ -197,7 +197,7 @@ Add-Type -Assembly System.IO.Compression.FileSystem
 
 
 ##############################
-#  STEP 7 - INSTALL NSIS.
+#  STEP 8 - INSTALL NSIS.
 ##############################
 
 # Install NSIS and wait for it to finish.
@@ -211,7 +211,7 @@ cp $NSIS_UNZU_DLL $NSIS_UNICODE_PLUGIN_DIR
 
 
 ##############################
-#  STEP 8 - COMPILE THE NSIS SCRIPT.
+#  STEP 9 - COMPILE THE NSIS SCRIPT.
 ##############################
 
 & $NSIS_MAKE /DVERSION=$version $STACKDRIVER_NSI
