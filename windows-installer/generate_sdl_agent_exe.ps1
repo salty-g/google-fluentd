@@ -176,7 +176,7 @@ $replacement = (Get-Content $replacement_file) -join("`r`n")
 #  STEP 5 - COPY NECESSARY DLL FILES.
 ##############################
 # Save the C++ runtime DLL to allow running gems with C++ native extensions
-# included gem such as winevt_c.
+# such as winevt_c.
 $libstd_cpp_dll = $RUBY_DEV_DIR + "\mingw32\bin\libstdc++-6.dll"
 cp $libstd_cpp_dll $SD_LOGGING_AGENT_DIR\bin
 
