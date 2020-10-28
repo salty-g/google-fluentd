@@ -152,7 +152,7 @@ else
         *) return 1;;
       esac
     done
-    start_daemon "${start_daemon_args[@]}" /bin/bash -c "$@"
+    start_daemon "${start_daemon_args[@]}" "$@"
   }
 fi
 
