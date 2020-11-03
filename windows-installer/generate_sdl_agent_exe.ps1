@@ -12,8 +12,8 @@
 ##############################
 #  ARGUMENTS
 ##############################
-
-Param([string]$version = (Get-Content $PSScriptRoot + "\..\windows-installer\VERSION"))
+$version_file=$PSScriptRoot + "\..\windows-installer\VERSION"
+Param([string]$version = (Get-Content $version_file))
 
 if ($version -eq "")
 {
