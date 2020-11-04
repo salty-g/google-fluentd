@@ -15,12 +15,6 @@
 
 Param([string]$version = (Get-Content "$PSScriptRoot\..\windows-installer\VERSION"))
 
-if ($version -eq "")
-{
-  Write-Output "No version set. Usage: .\generate_sdl_agent_exe.ps1 -version v1-4"
-  exit
-}
-
 ##############################
 #  TRACING AND ERROR HANDLING
 ##############################
