@@ -14,7 +14,7 @@ gem 'open_uri_redirections', '0.2.1'
 gem 'test-kitchen',    '~> 1.2'
 gem 'kitchen-vagrant', '~> 0.14'
 
-# Pin bundler version to '2.2.3'
+# Pin bundler version to '2.2.3', the recent '2.2.4' introduces a bug when fetching the repos using `git -C clone`.
 gem 'bundler', '2.2.3'
 
 group :test do
