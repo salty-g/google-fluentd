@@ -35,4 +35,5 @@ if windows?
   download "fluent-plugin-windows-eventlog", "0.8.0"
   download "nokogiri", "1.10.10"
   download "fluent-plugin-parser-winevt_xml", "0.2.2"
+  download "ffi", "1.14.2"
 end
