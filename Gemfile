@@ -17,6 +17,8 @@ gem 'kitchen-vagrant', '~> 0.14'
 # Pin bundler version to '2.2.3', the recent '2.2.4' introduces a bug when fetching the repos using `git -C clone`.
 gem 'bundler', '2.2.3'
 
+gem 'ffi', '1.14.1'
+
 group :test do
   gem 'rake', '~> 10.1.0'
   gem 'serverspec', '~> 2.18.0'
