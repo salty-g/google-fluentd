@@ -153,7 +153,7 @@ Get-ChildItem -Path $sha
 & $RUBY_EXE $gem_installer $plugin_gems_rb
 Get-ChildItem -Path $sha
 & $GEM_CMD uninstall --silent ffi -a
-& $GEM_CMD install silent --version '1.14.1'
+& $GEM_CMD install ffi --version '1.14.1'
 
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
