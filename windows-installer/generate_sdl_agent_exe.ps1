@@ -155,7 +155,7 @@ Get-ChildItem -Path $sha
 & $GEM_CMD dependency ffi --reverse-dependencies
 & $GEM_CMD uninstall --silent ffi -a
 & $GEM_CMD install ffi --version '1.14.1'
-
+& $GEM_CMD list
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
 ##############################
