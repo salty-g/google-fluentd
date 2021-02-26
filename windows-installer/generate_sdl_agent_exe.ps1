@@ -145,19 +145,12 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 $gem_installer = $SRC_ROOT + '\bin\gem_installer'
 $core_gems_rb = $SRC_ROOT + '\core_gems.rb'
 $plugin_gems_rb = $SRC_ROOT + '\plugin_gems.rb'
-$sha = $SRC_ROOT + '\bin'
-Get-ChildItem -Path $sha
 & $GEM_CMD install ffi --version '1.14.1'
-Get-ChildItem -Path $sha
 & $GEM_CMD install fluentd:1.11.2 --no-document
-Get-ChildItem -Path $sha
 & $RUBY_EXE $gem_installer $core_gems_rb
 & $RUBY_EXE $gem_installer $plugin_gems_rb
-Get-ChildItem -Path $sha
 & $GEM_CMD dependency ffi --reverse-dependencies
-& $GEM_CMD uninstall --silent ffi -a
-& $GEM_CMD install ffi --version '1.14.1'
-& $GEM_CMD list
+
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
 ##############################
