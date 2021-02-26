@@ -147,6 +147,8 @@ $core_gems_rb = $SRC_ROOT + '\core_gems.rb'
 $plugin_gems_rb = $SRC_ROOT + '\plugin_gems.rb'
 $sha = $SRC_ROOT + '\bin'
 Get-ChildItem -Path $sha
+& $GEM_CMD install ffi --version '1.14.1'
+Get-ChildItem -Path $sha
 & $GEM_CMD install fluentd:1.11.2 --no-document
 Get-ChildItem -Path $sha
 & $RUBY_EXE $gem_installer $core_gems_rb
