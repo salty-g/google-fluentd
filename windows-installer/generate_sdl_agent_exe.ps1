@@ -152,6 +152,7 @@ Get-ChildItem -Path $sha
 & $RUBY_EXE $gem_installer $core_gems_rb
 & $RUBY_EXE $gem_installer $plugin_gems_rb
 Get-ChildItem -Path $sha
+& $GEM_CMD dependency ffi --reverse-dependencies
 & $GEM_CMD uninstall --silent ffi -a
 & $GEM_CMD install ffi --version '1.14.1'
 
