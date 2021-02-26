@@ -149,7 +149,6 @@ $plugin_gems_rb = $SRC_ROOT + '\plugin_gems.rb'
 & $GEM_CMD install fluentd:1.11.2 --no-document
 & $RUBY_EXE $gem_installer $core_gems_rb
 & $RUBY_EXE $gem_installer $plugin_gems_rb
-& $GEM_CMD dependency ffi --reverse-dependencies
 
 ##############################
 #  STEP 4.1 - TEMPORARY HACK TO UPDATE RUBY FILE
