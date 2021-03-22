@@ -3,8 +3,6 @@ name "td-agent-cleanup"
 
 dependency "td-agent"
 
-skip_transitive_dependency_licensing true
-
 build do
   block do
     project_name = project.name
