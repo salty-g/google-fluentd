@@ -4,6 +4,8 @@ name "td-agent-ui"
 dependency "fluentd-ui"
 dependency "td-agent-files"
 
+skip_transitive_dependency_licensing true
+
 # for 'td-agent-ui' command
 
 build do
