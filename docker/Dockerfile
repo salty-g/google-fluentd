@@ -3,7 +3,7 @@ FROM debian:10.9-slim
 # Default google-fluentd to the latest stable.
 # Use `docker build --build-arg REPO_SUFFIX=<CUSTOM_REPO_SUFFIX>` to override
 # the version.
-ARG REPO_SUFFIX=20210428-2
+ARG REPO_SUFFIX=20210409-1
 
 COPY entrypoint.sh Dockerfile /
 
@@ -19,9 +19,8 @@ RUN apt-get update \
         ca-certificates \
         adduser \
     # Install Logging Agent.
-    # We fix REPO_CODENAME=stretch as that is currently the only repo we can pull from
-    # that supports using a REPO_SUFFIX.
-    && curl -sS https://dl.google.com/cloudagents/add-logging-agent-repo.sh | REPO_SUFFIX="$REPO_SUFFIX" REPO_CODENAME=stretch DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash /dev/stdin --also-install \
+
+    && curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | REPO_SUFFIX="$REPO_SUFFIX" REPO_CODENAME=stretch DO_NOT_INSTALL_CATCH_ALL_CONFIG=true bash \
     # Store versions in the VERSION file.
     && dpkg -s google-fluentd | sed -nE 's/^Version: (.*)(-[^-]+)$/VERSION=\1\nGOOGLE_FLUENTD_VERSION=\1\2/p' >> /VERSION \
     && echo REPO_SUFFIX=$REPO_SUFFIX >> /VERSION \
